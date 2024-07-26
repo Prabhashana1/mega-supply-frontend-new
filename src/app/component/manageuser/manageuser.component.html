@@ -1,0 +1,235 @@
+<div class="container-fluid">
+
+  <div *ngIf="showError" class="alert alert-danger alert-dismissible fade show text-center mt-5" role="alert">
+    {{ errorMessage }}
+    <button type="button" class="btn-close" aria-label="Close" (click)="showError = false"></button>
+  </div>
+
+  <div class="alert alert-success alert-dismissible fade show text-center mt-3" role="alert"
+    *ngIf="showSuccessResponse">
+    {{message}}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+
+  <div class="alert alert-danger alert-dismissible fade show text-center mt-3" role="alert" *ngIf="showFailedResponse">
+    {{message}}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+
+  <h1 class="text-center mt-3">Manage Users</h1>
+
+  <div class="row my-3">
+    <div class="col">
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addFormModal">Add New
+        User</button>
+    </div>
+  </div>
+
+
+  <div class="row">
+    <div class="col-12">
+      <div class="table-responsive">
+        <table class="table table-bordered table-striped table-hover">
+          <thead class="text-center">
+            <tr>
+              <th scope="col">User ID</th>
+              <th scope="col">User Name</th>
+              <th scope="col">E-mail</th>
+              <th scope="col">Password</th>
+              <th scope="col">Phone Number</th>
+              <th scope="col">ID Number</th>
+              <th scope="col">User Role</th>
+              <th scope="col">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let user of userData">
+              <td>{{user.id}}</td>
+              <td>{{user.name}}</td>
+              <td>{{user.email}}</td>
+              <td>{{user.password}}</td>
+              <td>{{user.phoneNumber}}</td>
+              <td>{{user.idNumber}}</td>
+              <td>{{user.userRole}}</td>
+              <td>
+                <button type="button" class="btn btn-sm btn-success" (click)="openUpdateModal(user)"
+                  data-bs-toggle="modal" [attr.data-bs-target]="'#updateModal'+user.id">Update</button>
+                <button type="button" class="btn btn-sm btn-warning mx-1" data-bs-toggle="modal"
+                  [attr.data-bs-target]="'#resetPasswordModal'+user.id">Reset Password</button>
+                <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal"
+                  [attr.data-bs-target]="'#deleteModal'+user.id">Delete</button>
+              </td>
+
+            
+              <div class="modal fade" [id]="'deleteModal'+user.id" tabindex="-1" role="dialog"
+                aria-labelledby="deleteModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="deleteModalLabel" style="color: red;">Delete Confirmation</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      Are you sure you want delete ? <span style="color: red;">{{user.name}}</span>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      <button (click)="deleteUser(user.id)" type="button" class="btn btn-danger"
+                        data-bs-dismiss="modal">Delete</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Update Modal -->
+              <div class="modal fade" [id]="'updateModal'+user.id" tabindex="-1" role="dialog"
+                aria-labelledby="updateModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="updateModalLabel">Update User</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <form #updateForm="ngForm" (ngSubmit)="updateUser(updateForm)">
+                        <input type="hidden" [(ngModel)]="updateFormData.id" name="id">
+                        <div class="mb-3">
+                          <label for="updateUserName" class="form-label">User's Name</label>
+                          <input type="text" class="form-control" id="updateUserName" name="name" required
+                            [(ngModel)]="updateFormData.name">
+                        </div>
+                        <div class="mb-3">
+                          <label for="updateUserEmail" class="form-label">Email address</label>
+                          <input type="email" class="form-control" id="updateUserEmail" name="email" required
+                            [(ngModel)]="updateFormData.email">
+                        </div>
+                        <div class="mb-3">
+                          <label for="updateUserPhoneNo" class="form-label">Phone number</label>
+                          <input type="text" class="form-control" id="updateUserPhoneNo" name="phoneNumber" required
+                            [(ngModel)]="updateFormData.phoneNumber">
+                        </div>
+                        <div class="mb-3">
+                          <label for="updateUserIdNo" class="form-label">ID Number</label>
+                          <input type="text" class="form-control" id="updateUserIdNo" name="idNumber" required
+                            [(ngModel)]="updateFormData.idNumber">
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                          <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Update User</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+
+              <div class="modal fade" [id]="'resetPasswordModal'+user.id" tabindex="-1" role="dialog"
+                aria-labelledby="resetPasswordModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="updateModalLabel">Reset User Password</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <form #resetPasswordForm="ngForm" (ngSubmit)="updateUser(updateForm)">
+                        <input type="hidden" [(ngModel)]="resetPasswordFormData.id" name="id">
+                        <div class="mb-3">
+                          <label for="updatePassword" class="form-label">Password</label>
+                          <input [type]="passwordFieldType" type="password" class="form-control" id="updatePassword"
+                            name="password" required [(ngModel)]="resetPasswordFormData.password"
+                            placeholder="Enter your new password">
+                        </div>
+                        <div class="mb-3">
+                          <label for="updateConfirmPassword" class="form-label">Confirm Password</label>
+                          <input [type]="passwordFieldType" type="password" class="form-control"
+                            id="updateConfirmPassword" name="confirmPassword" placeholder="Enter confrim new password"
+                            required>
+                        </div>
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" id="showPassword"
+                            (change)="togglePasswordVisibility()">
+                          <label class="form-check-label" for="showPassword">Show Password</label>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                          <button type="submit" class="btn btn-warning" data-bs-dismiss="modal">Reset Password</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="modal fade" id="addFormModal" tabindex="-1" aria-labelledby="addFormModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addFormModalLabel">Add New User</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!-- Form -->
+        <form id="addUserForm" #userSaveForm="ngForm" (ngSubmit)="addUserAccount(userSaveForm)" novalidate>
+          <div class="mb-3">
+            <label for="userName" class="form-label">User's Name</label>
+            <input type="text" class="form-control" id="name" name="name" placeholder="Enter your name" required
+              [(ngModel)]="form.name">
+          </div>
+          <div class="mb-3">
+            <label for="userEmail" class="form-label">Email address</label>
+            <input type="email" class="form-control" id="email" placeholder="Enter valid email" name="email" required
+              [(ngModel)]="form.email">
+          </div>
+          <div class="mb-3">
+            <label for="userPassword" class="form-label">Password</label>
+            <input [type]="passwordFieldType" type="password" class="form-control" id="password"
+              placeholder="Enter strong password" name="password" required [(ngModel)]="form.password">
+          </div>
+          <div class="mb-3">
+            <label for="userConPassword" class="form-label">Confirm password</label>
+            <input [type]="passwordFieldType" type="password" class="form-control" id="userConfirmPassword"
+              placeholder="Enter confirm password" name="userConfirmPassword" required>
+          </div>
+          <div class="mb-3">
+            <label for="userPhoneNo" class="form-label">Phone number</label>
+            <input type="text" class="form-control" id="phoneNumber" placeholder="Enter valid phone number"
+              name="phoneNumber" required [(ngModel)]="form.phoneNumber">
+          </div>
+          <div class="mb-3">
+            <label for="userIdNo" class="form-label">ID Number</label>
+            <input type="text" class="form-control" id="idNumber" placeholder="Enter your NIC number" name="idNumber"
+              required [(ngModel)]="form.idNumber">
+          </div>
+          <div class="mb-3">
+            <label for="userRole" class="form-label">User Role</label>
+            <select [(ngModel)]="selectedRole" class="form-control" id="userRole" name="userRole">
+              <option value="USER">USER</option>
+              <option value="ADMIN">ADMIN</option>
+            </select>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="showPassword" (change)="togglePasswordVisibility()">
+            <label class="form-check-label" for="showPassword">Show Password</label>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Save User</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

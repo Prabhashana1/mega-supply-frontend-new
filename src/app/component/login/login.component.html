@@ -1,0 +1,27 @@
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+    <div class="card shadow-lg" style="width: 100%; max-width: 400px;">
+      
+      <div class="card-body">
+        <h3 class="card-title text-center mb-4">Login</h3>
+        <form #loginForm="ngForm" (ngSubmit)="login(loginForm)">
+          <div class="mb-3">
+            <label for="email" class="form-label">Enter Email address</label>
+            <input mgModel type="email" class="form-control" name="email" id="email" placeholder="Enter email" required [(ngModel)]="form.email">
+          </div>
+          <div class="mb-5 position-relative">
+            <label for="password" class="form-label">Enter Password</label>
+            <input ngModel [type]="passwordFieldType" name="password" class="form-control" id="password" placeholder="Enter password" required [(ngModel)]="form.password">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="showPassword" (change)="togglePasswordVisibility()">
+              <label class="form-check-label" for="showPassword">Show Password</label>
+            </div>
+          </div>
+          <button type="submit" value="Login" class="btn btn-primary w-100">Login</button>
+        </form>
+        <div class="alert alert-danger alert-dismissible fade show text-center mx-3 mt-3" role="alert" *ngIf="showFailedResponse">
+          {{message}}
+        </div>
+      </div>
+    </div>
+  </div>
+  
