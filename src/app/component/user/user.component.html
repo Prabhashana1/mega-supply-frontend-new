@@ -1,14 +1,284 @@
 <div class="container-fluid">
+
+    <div *ngIf="showError" class="alert alert-danger alert-dismissible fade show text-center mt-5" role="alert">
+        {{ errorMessage }}
+        <button type="button" class="btn-close" aria-label="Close" (click)="showError = false"></button>
+    </div>
+
+    <div class="alert alert-success alert-dismissible fade show text-center mt-3" role="alert"
+        *ngIf="showSuccessResponse">
+        {{message}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
     <h2 class="text-center m-3">User Dashboard</h2>
 
-    <div class="row border" style="height: fit-content;">
-        <label class="col m-3">Select Search Option</label>
-        <Select class="col m-3">
-            <option value="BYJOBID">By Job ID</option>
-            <option value="BYNAME">By Customer Name</option>
-            <option value="BYJOBID">By Job ID</option>
-            <option value="BYJOBID">By Job ID</option>
-        </Select>
-        <button class="btn m-3 btn-primary">Search</button>
+    <div class="row mb-3">
+        <div class="col">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addJobFromModal">Add
+                New
+                Job</button>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-12">
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped table-hover">
+                    <thead class="text-center table-dark">
+                        <tr>
+                            <th scope="col">Job ID</th>
+                            <th scope="col">Customer Name</th>
+                            <th scope="col">Phone Number</th>
+                            <th scope="col">Phone Model</th>
+                            <th scope="col">IMEI</th>
+                            <th scope="col">Falut</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Descrption</th>
+                            <th scope="col">Job Added At</th>
+                            <th scope="col">Job Release At</th>
+                            <th scope="col">Back Cover</th>
+                            <th scope="col">Memory Card</th>
+                            <th scope="col">Sim Card</th>
+                            <th scope="col">Job Added By</th>
+                            <th scope="col">Repair By</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let job of jobData">
+                            <td>{{job.id}}</td>
+                            <td>{{job.customerName}}</td>
+                            <td>{{job.phoneNumber}}</td>
+                            <td>{{job.phoneModel}}</td>
+                            <td>{{job.imei}}</td>
+                            <td>{{job.fault}}</td>
+                            <td>{{job.price}}</td>
+                            <td>{{job.description}}</td>
+                            <td>{{job.jobAddedAt}}</td>
+                            <td>{{job.jobReleaseAt}}</td>
+                            <td>{{job.hasBackCover}}</td>
+                            <td>{{job.hasMemoryCard}}</td>
+                            <td>{{job.hasSimCard}}</td>
+                            <td>{{job.jobAddedBy}}</td>
+                            <td>{{job.repairedBy}}</td>
+                            <td>{{job.status}}</td>
+                            <td>
+                                <button type="button" class="btn btn-sm btn-info mx-1" (click)="openJobRepairModal(job)"
+                                    data-bs-toggle="modal" [attr.data-bs-target]="'#jobRepairModel'+job.id">Change Job
+                                    Progress</button>
+                                <button type="button" class="btn btn-sm btn-success">Pay</button>
+                                <button type="button" class="btn btn-sm btn-warning mx-1">Update</button>
+                                <button *ngIf="isAdmin" type="button" class="btn btn-sm btn-danger"
+                                    data-bs-toggle="modal" [attr.data-bs-target]="'#deleteModal'+job.id">Delete</button>
+                            </td>
+
+                            <div class="modal fade" [id]="'deleteModal'+job.id" tabindex="-1" role="dialog"
+                                aria-labelledby="deleteModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="deleteModalLabel" style="color: red;">Delete
+                                                Confirmation</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close">
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Are you sure you want delete job relevent with job ID: <span
+                                                style="color: red;">{{job.id}} ?</span>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-bs-dismiss="modal">Close</button>
+                                            <button (click)="deleteJob(job.id)" type="button" class="btn btn-danger"
+                                                data-bs-dismiss="modal">Delete</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="modal fade" [id]="'jobRepairModel'+job.id" tabindex="-1" role="dialog"
+                                aria-labelledby="jobRepairModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="repairJobModalLabel">Update Job Progress</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form #repairJobForm="ngForm" (ngSubmit)="jobRepair(repairJobForm)">
+                                                <input type="hidden" [(ngModel)]="jobRepairForm.id" name="id">
+                                                <div class="mb-3">
+                                                    <label for="customerName" class="form-label">Customer Name</label>
+                                                    <input type="text" disabled="true" class="form-control"
+                                                        value="{{job.customerName}}">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="customerName" class="form-label">Phone Model</label>
+                                                    <input type="text" disabled="true" class="form-control"
+                                                        value="{{job.phoneModel}}">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="customerName" class="form-label">Fault</label>
+                                                    <input type="text" disabled="true" class="form-control"
+                                                        value="{{job.fault}}">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="repairStatus" class="form-label">Job Status</label>
+                                                    <select class="form-control" id="repairStatus"
+                                                        [(ngModel)]="jobRepairForm.status" name="status">
+                                                        <option value="PENDING">PENDING</option>
+                                                        <option value="IN_PROGRESS">IN_PROGRESS</option>
+                                                        <option value="COMPLETED">COMPLETED</option>
+                                                        <option value="CAN'T_FIX">CAN'T FIX</option>
+                                                        <option value="WAITING FOR PART">WAITING FOR PART</option>
+                                                    </select>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-bs-dismiss="modal">Close</button>
+                                                    <button type="submit" class="btn btn-primary"
+                                                        data-bs-dismiss="modal">Update Job Progress
+                                                    </button>
+                                                </div>
+
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="addJobFromModal" tabindex="-1" aria-labelledby="addJobFormModalLable" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addJobFormModalLable">Add New Job</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="addJobForm" #jobeSaveForm="ngForm" (ngSubmit)="addJob(jobeSaveForm)" novalidate>
+                    <div class="mb-3">
+                        <label for="customerName" class="form-label">Customer Name</label>
+                        <input type="text" class="form-control" id="customerName" name="customerName"
+                            placeholder="Enter customer name" required [(ngModel)]="saveFormData.customerName"
+                            #customerName="ngModel">
+                        <div *ngIf="customerName.invalid && (customerName.dirty || customerName.touched)"
+                            class="text-danger">
+                            <div *ngIf="customerName.errors?.['required']">Customer name is required.</div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="phoneNumber" class="form-label">Phone number</label>
+                        <input type="text" class="form-control" id="phoneNumber" placeholder="Enter valid phone number"
+                            name="phoneNumber" [(ngModel)]="saveFormData.phoneNumber" #phoneNumber="ngModel"
+                            [pattern]="'^0[0-9]{9}$'">
+                        <div *ngIf="phoneNumber.invalid && (phoneNumber.dirty)" class="text-danger">
+                            <div *ngIf="phoneNumber.errors?.['pattern']">Phone number must start with 0 and be 10 digits
+                                long.</div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="phoneModel" class="form-label">Phone Model</label>
+                        <input type="text" class="form-control" id="phoneModel" name="phoneModel"
+                            placeholder="Enter phone model" required [(ngModel)]="saveFormData.phoneModel"
+                            #phoneModel="ngModel">
+                        <div *ngIf="phoneModel.invalid && (phoneModel.dirty || phoneModel.touched)" class="text-danger">
+                            <div *ngIf="phoneModel.errors?.['required']">Phone model is required.</div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="imei" class="form-label">IMEI or Serial Number</label>
+                        <input type="text" class="form-control" id="imei" name="imei"
+                            placeholder="Enter phone IMEI or serial number" [(ngModel)]="saveFormData.imei">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="fault" class="form-label">Falut</label>
+                        <input type="text" class="form-control" id="fault" name="fault" placeholder="Enter fault"
+                            required [(ngModel)]="saveFormData.fault" #fault="ngModel">
+                        <div *ngIf="fault.invalid && (fault.dirty || fault.touched)" class="text-danger">
+                            <div *ngIf="fault.errors?.['required']">Phone fault is required.</div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="price" class="form-label">Price</label>
+                        <input type="number" class="form-control" id="price" name="price" placeholder="Enter price"
+                            [(ngModel)]="saveFormData.price">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Description</label>
+                        <input type="text" class="form-control" id="description" name="description"
+                            placeholder="Enter description" [(ngModel)]="saveFormData.description">
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="hasBackCover" name="hasBackCover"
+                                    [(ngModel)]="saveFormData.hasBackCover">
+                                <label class="form-check-label" for="hasBackCover">Has Back Cover</label>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="hasMemoryCard" name="hasMemoryCard"
+                                    [(ngModel)]="saveFormData.hasMemoryCard">
+                                <label class="form-check-label" for="hasMemoryCard">Has Memory Card</label>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="hasSimCard" name="hasSimCard"
+                                    [(ngModel)]="saveFormData.hasSimCard">
+                                <label class="form-check-label" for="hasSimCard">Has Sim Card</label>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="mb-3">
+                        <label for="status" class="form-label">Job Status</label>
+                        <select class="form-control" id="status" [(ngModel)]="saveFormData.status" name="status">
+                            <option value="PENDING">PENDING</option>
+                            <option value="IN_PROGRESS">IN_PROGRESS</option>
+                            <option value="COMPLETED">COMPLETED</option>
+                            <option value="CAN'T_FIX">CAN'T FIX</option>
+                        </select>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary" [disabled]="jobeSaveForm.invalid"
+                            data-bs-dismiss="modal">Save
+                            Job</button>
+                    </div>
+
+
+                </form>
+            </div>
+        </div>
     </div>
 </div>

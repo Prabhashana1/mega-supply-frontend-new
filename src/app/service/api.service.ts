@@ -37,4 +37,20 @@ export class ApiService {
     return this.http.put(this.BASE_URL+'/admin/reset-password', resetPasswordData);
   }
 
+  getJobData(): Observable<any>{
+    return this.http.get(this.BASE_URL+'/employee/get-all-job');
+  }
+
+  deleteJob(jobId: number): Observable<any>{
+    return this.http.delete(this.BASE_URL+'/admin/delete-job/'+jobId);
+  }
+
+  addJob(jobData:any): Observable<any> {
+    return this.http.post(this.BASE_URL+'/employee/save-job', jobData);
+  }
+
+  jobRepair(jobRepairData: any): Observable<any> {
+    return this.http.put(this.BASE_URL+'/employee/job-repair', jobRepairData);
+  }
+
 }

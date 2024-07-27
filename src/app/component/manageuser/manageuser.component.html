@@ -60,7 +60,7 @@
                   [attr.data-bs-target]="'#deleteModal'+user.id">Delete</button>
               </td>
 
-            
+
               <div class="modal fade" [id]="'deleteModal'+user.id" tabindex="-1" role="dialog"
                 aria-labelledby="deleteModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
@@ -97,26 +97,45 @@
                         <div class="mb-3">
                           <label for="updateUserName" class="form-label">User's Name</label>
                           <input type="text" class="form-control" id="updateUserName" name="name" required
-                            [(ngModel)]="updateFormData.name">
+                            [(ngModel)]="updateFormData.name" #name="ngModel">
+                          <div *ngIf="name.invalid && (name.dirty || name.touched)" class="text-danger">
+                            <div *ngIf="name.errors?.['required']">Name is required.</div>
+                          </div>
                         </div>
                         <div class="mb-3">
                           <label for="updateUserEmail" class="form-label">Email address</label>
                           <input type="email" class="form-control" id="updateUserEmail" name="email" required
-                            [(ngModel)]="updateFormData.email">
+                            [(ngModel)]="updateFormData.email" #email="ngModel"
+                            pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$">
+                          <div *ngIf="email.invalid && (email.dirty || email.touched)" class="text-danger">
+                            <div *ngIf="email.errors?.['required']">Email is required.</div>
+                            <div *ngIf="email.errors?.['pattern'] || email.errors?.['email']">Please enter a valid
+                              email.</div>
+                          </div>
                         </div>
                         <div class="mb-3">
                           <label for="updateUserPhoneNo" class="form-label">Phone number</label>
                           <input type="text" class="form-control" id="updateUserPhoneNo" name="phoneNumber" required
-                            [(ngModel)]="updateFormData.phoneNumber">
+                            [(ngModel)]="updateFormData.phoneNumber" #phoneNumber="ngModel" [pattern]="'^0[0-9]{9}$'">
+                          <div *ngIf="phoneNumber.invalid && (phoneNumber.dirty || phoneNumber.touched)"
+                            class="text-danger">
+                            <div *ngIf="phoneNumber.errors?.['required']">Phone number is required.</div>
+                            <div *ngIf="phoneNumber.errors?.['pattern']">Phone number must start with 0 and be 10 digits
+                              long.</div>
+                          </div>
                         </div>
                         <div class="mb-3">
                           <label for="updateUserIdNo" class="form-label">ID Number</label>
                           <input type="text" class="form-control" id="updateUserIdNo" name="idNumber" required
-                            [(ngModel)]="updateFormData.idNumber">
+                            [(ngModel)]="updateFormData.idNumber" #idNumber="ngModel">
+                          <div *ngIf="idNumber.invalid && (idNumber.dirty || idNumber.touched)" class="text-danger">
+                            <div *ngIf="idNumber.errors?.['required']">ID Number is required.</div>
+                          </div>
                         </div>
                         <div class="modal-footer">
                           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                          <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Update User</button>
+                          <button type="submit" class="btn btn-primary" [disabled]="updateForm.invalid"
+                            data-bs-dismiss="modal">Update User</button>
                         </div>
                       </form>
                     </div>
@@ -135,7 +154,7 @@
                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                      <form #resetPasswordForm="ngForm" (ngSubmit)="updateUser(updateForm)">
+                      <form #resetPasswordForm="ngForm" (ngSubmit)="resetPassword(resetPasswordForm)">
                         <input type="hidden" [(ngModel)]="resetPasswordFormData.id" name="id">
                         <div class="mb-3">
                           <label for="updatePassword" class="form-label">Password</label>
@@ -186,17 +205,28 @@
           <div class="mb-3">
             <label for="userName" class="form-label">User's Name</label>
             <input type="text" class="form-control" id="name" name="name" placeholder="Enter your name" required
-              [(ngModel)]="form.name">
+              [(ngModel)]="form.name" #name="ngModel">
+            <div *ngIf="name.invalid && (name.dirty || name.touched)" class="text-danger">
+              <div *ngIf="name.errors?.['required']">Name is required.</div>
+            </div>
           </div>
           <div class="mb-3">
             <label for="userEmail" class="form-label">Email address</label>
             <input type="email" class="form-control" id="email" placeholder="Enter valid email" name="email" required
-              [(ngModel)]="form.email">
+              [(ngModel)]="form.email" #email="ngModel" pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$">
+            <div *ngIf="email.invalid && (email.dirty || email.touched)" class="text-danger">
+              <div *ngIf="email.errors?.['required']">Email is required.</div>
+              <div *ngIf="email.errors?.['pattern'] || email.errors?.['email']">Please enter a valid email.</div>
+            </div>
           </div>
           <div class="mb-3">
             <label for="userPassword" class="form-label">Password</label>
             <input [type]="passwordFieldType" type="password" class="form-control" id="password"
-              placeholder="Enter strong password" name="password" required [(ngModel)]="form.password">
+              placeholder="Enter strong password" name="password" required [(ngModel)]="form.password"
+              #password="ngModel">
+            <div *ngIf="password.invalid && (password.dirty || password.touched)" class="text-danger">
+              <div *ngIf="password.errors?.['required']">Password is required.</div>
+            </div>
           </div>
           <div class="mb-3">
             <label for="userConPassword" class="form-label">Confirm password</label>
@@ -206,12 +236,20 @@
           <div class="mb-3">
             <label for="userPhoneNo" class="form-label">Phone number</label>
             <input type="text" class="form-control" id="phoneNumber" placeholder="Enter valid phone number"
-              name="phoneNumber" required [(ngModel)]="form.phoneNumber">
+              name="phoneNumber" required [(ngModel)]="form.phoneNumber" #phoneNumber="ngModel"
+              [pattern]="'^0[0-9]{9}$'">
+            <div *ngIf="phoneNumber.invalid && (phoneNumber.dirty || phoneNumber.touched)" class="text-danger">
+              <div *ngIf="phoneNumber.errors?.['required']">Phone number is required.</div>
+              <div *ngIf="phoneNumber.errors?.['pattern']">Phone number must start with 0 and be 10 digits long.</div>
+            </div>
           </div>
           <div class="mb-3">
             <label for="userIdNo" class="form-label">ID Number</label>
             <input type="text" class="form-control" id="idNumber" placeholder="Enter your NIC number" name="idNumber"
-              required [(ngModel)]="form.idNumber">
+              required [(ngModel)]="form.idNumber" #idNumber="ngModel">
+            <div *ngIf="idNumber.invalid && (idNumber.dirty || idNumber.touched)" class="text-danger">
+              <div *ngIf="idNumber.errors?.['required']">ID Number is required.</div>
+            </div>
           </div>
           <div class="mb-3">
             <label for="userRole" class="form-label">User Role</label>
@@ -226,7 +264,8 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Save User</button>
+            <button type="submit" class="btn btn-primary" [disabled]="userSaveForm.invalid" data-bs-dismiss="modal">Save
+              User</button>
           </div>
         </form>
       </div>

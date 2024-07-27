@@ -70,8 +70,8 @@ export class ManageuserComponent implements OnInit {
     this.updateFormData = { ...user }; // Populate form data with selected user's data
   }
 
-  resetPassword(resetPasswordForm: NgForm){
-    if (resetPasswordForm.valid){
+  resetPassword(resetPasswordForm: NgForm) {
+    if (resetPasswordForm.valid) {
       this.apiService.resetUserPassword(this.resetPasswordFormData).subscribe({
         next: (response) => {
           this.showSuccessAlert(response.message);
@@ -87,48 +87,53 @@ export class ManageuserComponent implements OnInit {
 
   updateUser(updateForm: NgForm) {
     if (updateForm.valid) {
-      this.apiService.updateUser(this.updateFormData).subscribe({
-        next: (response) => {
-          this.showSuccessAlert(response.message);
-          this.getUserData(); // Refresh the user data
-        },
-        error: (error) => {
-          this.showFailedAlert(error);
-        }
-      });
+      if (updateForm.valid) {
+        this.apiService.updateUser(this.updateFormData).subscribe({
+          next: (response) => {
+            this.showSuccessAlert(response.message);
+            this.getUserData(); // Refresh the user data
+          },
+          error: (error) => {
+            this.showFailedAlert(error);
+          }
+        });
+      }
     }
+
   }
 
 
 
   addUserAccount(userSaveForm: NgForm) {
 
-    if (this.selectedRole === 'USER') {
-      this.apiService.addUserAccount(userSaveForm.value).subscribe((response: any) => {
-        this.showSuccessAlert(response.message);
-        this.getUserData();
-      },
-        (error => {
-          this.showFailedAlert(error);
+    if (userSaveForm.valid) {
+      if (this.selectedRole === 'USER') {
+        this.apiService.addUserAccount(userSaveForm.value).subscribe((response: any) => {
+          this.showSuccessAlert(response.message);
+          this.getUserData();
+          window.location.reload();
+        },
+          (error => {
+            this.showFailedAlert(error);
 
-        })
-      );
-    } else if (this.selectedRole === 'ADMIN') {
-      this.apiService.addAdminAccount(userSaveForm.value).subscribe((response: any) => {
-        this.showSuccessAlert(response.message);
-        this.getUserData();
-      },
-        (error => {
-          this.showFailedAlert(error);
+          })
+        );
+      } else if (this.selectedRole === 'ADMIN') {
+        this.apiService.addAdminAccount(userSaveForm.value).subscribe((response: any) => {
+          this.showSuccessAlert(response.message);
+          this.getUserData();
+        },
+          (error => {
+            this.showFailedAlert(error);
 
-        })
-      );
-    } else {
-      this.showFailedAlert('Something went wrong relevent user role!');
+          })
+        );
+      } else {
+        this.showFailedAlert('Something went wrong relevent user role!');
+      }
     }
-
-
   }
+
 
 
   deleteUser(userId: number) {

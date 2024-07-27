@@ -1,0 +1,5 @@
+.table th, .table td {
+    white-space: nowrap; /* Prevent text wrapping */
+    overflow: hidden;    /* Hide overflowed text */
+    text-overflow: ellipsis; /* Add ellipsis for overflowed text */   /* Set a maximum width for the cells */
+  }
