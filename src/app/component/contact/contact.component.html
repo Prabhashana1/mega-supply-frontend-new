@@ -1,25 +1,53 @@
+<div class="alert alert-success alert-dismissible fade show text-center mt-3" role="alert" *ngIf="showSuccessResponse">
+  {{responseMessage}}
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+
+<div class="alert alert-danger alert-dismissible fade show text-center mt-3" role="alert" *ngIf="showFailedResponse">
+  {{responseMessage}}
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+
 <div class="container d-flex justify-content-center align-items-center min-vh-100">
-    <div class="card shadow-lg" style="width: 100%; max-width: 400px;">
-      <div class="card-body">
-        <h3 class="card-title text-center mb-4">Contact Us</h3>
-        <form #loginForm="ngForm">
-          <div class="mb-3">
-            <label for="email" class="form-label">Enter Email address</label>
-            <input mgModel type="email" class="form-control" name="email" id="email" placeholder="Enter email" required >
+
+
+  <div class="card shadow-lg" style="width: 100%; max-width: 400px;">
+    <div class="card-body">
+      <h3 class="card-title text-center mb-4">Contact Us</h3>
+      <form #contactUsForm="ngForm" (ngSubmit)="contactUsSubmit(contactUsForm)" novalidate>
+        <div class="mb-3">
+          <label for="email" class="form-label">Enter Email address</label>
+          <input [(ngModel)]="contactUsFormData.email" #email="ngModel"
+            pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$" type="email" class="form-control" name="email"
+            id="email" placeholder="Enter email" required>
+          <div *ngIf="email.invalid && (email.dirty || email.touched)" class="text-danger">
+            <div *ngIf="email.errors?.['required']">Email is required.</div>
+            <div *ngIf="email.errors?.['pattern'] || email.errors?.['email']">Please enter a valid email.</div>
           </div>
-          <div class="mb-3">
-            <label for="number" class="form-label">Enter Phone Number</label>
-            <input mgModel type="number" class="form-control" name="phoneNo" id="phoneNo" placeholder="Enter phone number" required >
+        </div>
+        <div class="mb-3">
+          <label for="number" class="form-label">Enter Phone Number</label>
+          <input [(ngModel)]="contactUsFormData.phoneNumber" #phoneNumber="ngModel" type="text" class="form-control"
+            name="phoneNumber" id="phoneNumber" placeholder="Enter phone number" required [pattern]="'^0[0-9]{9}$'">
+          <div *ngIf="phoneNumber.invalid && (phoneNumber.dirty || phoneNumber.touched)" class="text-danger">
+            <div *ngIf="phoneNumber.errors?.['required']">Phone number is required.</div>
+            <div *ngIf="phoneNumber.errors?.['pattern']">Phone number must start with 0 and be 10 digits long.</div>
           </div>
-          <div class="mb-3">
-            <label for="textarea" class="form-label">What can we help you with?</label>
-            <textarea class="form-control"></textarea>
+        </div>
+        <div class="mb-3">
+          <label for="textarea" class="form-label">What can we help you with?</label>
+          <textarea [(ngModel)]="contactUsFormData.message" #message="ngModel" class="form-control" id="message"
+            name="message" required></textarea>
+          <div *ngIf="message.invalid && (message.dirty || message.touched)" class="text-danger">
+            <div *ngIf="message.errors?.['required']">Message is required.</div>
           </div>
-          <button type="submit" value="Login" class="btn btn-primary w-100">Submit</button>
-          <p class="text-center mt-3">
-            <a href="tel:+94775164544" class="btn btn-secondary">Or Call Sudeep Jayarathna</a>
-          </p>
-        </form>
-      </div>
+        </div>
+        <button type="submit" value="Login" [disabled]="contactUsForm.invalid"
+          class="btn btn-primary w-100">Submit</button>
+        <p class="text-center mt-3">
+          <a href="tel:+94775164544" class="btn btn-secondary">Or Call Sudeep Jayarathna</a>
+        </p>
+      </form>
     </div>
   </div>
+</div>

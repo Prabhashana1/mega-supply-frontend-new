@@ -1,7 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { UserAuthService } from './user-auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +10,10 @@ export class ApiService {
   private BASE_URL = 'http://localhost:8080/api';
 
   constructor(private http: HttpClient) { }
+
+  requstHeader = new HttpHeaders(
+    {"No-Auth":"True"}
+  );
 
 
   getUserData(): Observable<any> {
@@ -37,8 +40,8 @@ export class ApiService {
     return this.http.put(this.BASE_URL+'/admin/reset-password', resetPasswordData);
   }
 
-  getJobData(): Observable<any>{
-    return this.http.get(this.BASE_URL+'/employee/get-all-job');
+  getJobData(page: number, size: number): Observable<any>{
+    return this.http.get(this.BASE_URL+'/employee/get-all-job', {params: {page: page.toString(), size: size.toString()}});
   }
 
   deleteJob(jobId: number): Observable<any>{
@@ -51,6 +54,46 @@ export class ApiService {
 
   jobRepair(jobRepairData: any): Observable<any> {
     return this.http.put(this.BASE_URL+'/employee/job-repair', jobRepairData);
+  }
+
+  updateJob(updateJobData: any): Observable<any> {
+    return this.http.put(this.BASE_URL+'/employee/update', updateJobData);
+  }
+
+  payJob(payJobData: any): Observable<any> {
+    return this.http.put(this.BASE_URL+'/employee/pay', payJobData);
+  }
+
+  searchJobById(id: number): Observable<any>{
+    return this.http.get(this.BASE_URL+`/employee/search/${id}`);
+  }
+
+  searchJobByCustomerName(customerName: string): Observable<any>{
+    return this.http.get(this.BASE_URL+`/employee/search-by-name/${customerName}`);
+  }
+
+  searchJobByPhoneNumber(phoneNumber: string): Observable<any>{
+    return this.http.get(this.BASE_URL+`/employee/search-by-phone-number/${phoneNumber}`);
+  }
+
+  searchJobByPhoneModel(phoneModel: string, page: number, size: number): Observable<any>{
+    return this.http.get(this.BASE_URL+`/employee/search-by-phone-model/${phoneModel}`, {params: {page: page.toString(), size: size.toString()}});
+  }
+
+  searchJobByImei(imei: string): Observable<any>{
+    return this.http.get(this.BASE_URL+`/employee/search-by-imei/${imei}`);
+  }
+
+  filterByStatus(status: string, page: number, size: number): Observable<any>{
+    return this.http.get(this.BASE_URL+`/employee/filter-by-status/${status}`, {params: {page: page.toString(), size: size.toString()}});
+  }
+
+  filterByDate(date: string): Observable<any>{
+    return this.http.get(this.BASE_URL+`/employee/search-by-date/${date}`);
+  }
+
+  contactUs(contactUs:any): Observable<any> {
+    return this.http.post(this.BASE_URL+'/auth/contact-us', contactUs, {headers: this.requstHeader});
   }
 
 }

@@ -86,7 +86,6 @@ export class ManageuserComponent implements OnInit {
 
 
   updateUser(updateForm: NgForm) {
-    if (updateForm.valid) {
       if (updateForm.valid) {
         this.apiService.updateUser(this.updateFormData).subscribe({
           next: (response) => {
@@ -98,8 +97,6 @@ export class ManageuserComponent implements OnInit {
           }
         });
       }
-    }
-
   }
 
 

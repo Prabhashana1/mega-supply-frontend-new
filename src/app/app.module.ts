@@ -19,6 +19,7 @@ import { AuthGuard } from './auth/auth.guard';
 import { AuthInterceptor } from './auth/auth.interceptor';
 import { ViewlinkComponent } from './component/viewlink/viewlink.component';
 import { ManageuserComponent } from './component/manageuser/manageuser.component';
+import { NumberToArrayPipe } from './number-to-array.pipe';
 
 
 @NgModule({
@@ -34,7 +35,8 @@ import { ManageuserComponent } from './component/manageuser/manageuser.component
     AdminComponent,
     UserComponent,
     ViewlinkComponent,
-    ManageuserComponent
+    ManageuserComponent,
+    NumberToArrayPipe
   ],
   imports: [
     BrowserModule,
