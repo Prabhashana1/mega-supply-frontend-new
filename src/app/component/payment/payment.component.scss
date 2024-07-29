@@ -1,0 +1,61 @@
+/* Base styles for the invoice container */
+.invoice-container {
+    width: 78mm;
+    padding: 10mm;
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    line-height: 1.5;
+  }
+  
+  .header {
+    margin-bottom: 5px;
+    padding-bottom: 5px;
+  }
+  
+  .header h1 {
+    font-size: 16px;
+    margin: 0;
+  }
+  
+  .customer-info, .job-info, .payment-info {
+    margin-bottom: 10px;
+  }
+  
+  .customer-info h2, .job-info h2, .payment-info h2 {
+    font-size: 14px;
+    margin-bottom: 5px;
+    border-bottom: 1px solid #000;
+  }
+  
+  .footer {
+    text-align: center;
+    margin-top: 10mm;
+  }
+  
+  /* Print-specific styles */
+  @media print {
+    /* Hide all elements on the page */
+    body * {
+      display: none;
+    }
+  
+    /* Make sure the body has no margins and paddings for printing */
+    body {
+      margin: 0;
+      padding: 0;
+    }
+  
+    /* Show only the invoice container */
+    .invoice-container, .invoice-container * {
+      display: block;
+    }
+  
+    /* Ensure the invoice container is positioned properly */
+    .invoice-container {
+      position: static; /* Ensure it is positioned correctly on the page */
+      width: auto; /* Adjust width as needed */
+      height: auto; /* Ensure container height fits content */
+      page-break-inside: avoid; /* Avoid page breaks inside the container */
+    }
+  }
+  

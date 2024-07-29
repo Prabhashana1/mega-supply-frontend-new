@@ -68,6 +68,10 @@ export class ApiService {
     return this.http.get(this.BASE_URL+`/employee/search/${id}`);
   }
 
+  searchOneJobById(id: number): Observable<any>{
+    return this.http.get(this.BASE_URL+`/employee/search-by-id/${id}`);
+  }
+
   searchJobByCustomerName(customerName: string): Observable<any>{
     return this.http.get(this.BASE_URL+`/employee/search-by-name/${customerName}`);
   }

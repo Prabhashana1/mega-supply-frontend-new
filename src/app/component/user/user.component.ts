@@ -1,11 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
 import { JobPayForm } from 'src/app/model/JobPay';
 import { JobRepairForm } from 'src/app/model/JobRepair';
 import { JobSaveForm } from 'src/app/model/JobSave';
 import { JobUpdateForm } from 'src/app/model/JobUpdate';
 import { ApiService } from 'src/app/service/api.service';
 import { UserAuthService } from 'src/app/service/user-auth.service';
+import { PaymentComponent } from '../payment/payment.component';
+import { JsonPipe } from '@angular/common';
+import { JobService } from 'src/app/service/job.service';
 
 @Component({
   selector: 'app-user',
@@ -39,6 +43,7 @@ export class UserComponent implements OnInit {
   currentPageForStatus: number = 0;
   pageSizeForStatus: number = 50;
   Math = Math;
+  oneJob: any;
 
 
   saveFormData: JobSaveForm = {
@@ -55,7 +60,7 @@ export class UserComponent implements OnInit {
     status: 'PENDING'
   }
 
-  jobUpdateFormData: JobUpdateForm ={
+  jobUpdateFormData: JobUpdateForm = {
     id: 0,
     customerName: '',
     phoneNumber: '',
@@ -70,7 +75,7 @@ export class UserComponent implements OnInit {
     status: ''
   }
 
-  jobPayFormData: JobPayForm ={
+  jobPayFormData: JobPayForm = {
     id: 0,
     price: 0
   }
@@ -80,29 +85,29 @@ export class UserComponent implements OnInit {
     status: ''
   }
 
-  openJobRepairModal(job: any): void{
+  openJobRepairModal(job: any): void {
     this.jobRepairForm = { ...job };
   }
 
-  openJobUpdateModal(job: any): void{
+  openJobUpdateModal(job: any): void {
     this.jobUpdateFormData = { ...job };
-    
+
   }
 
-  openJobPayModal(job: any): void{
+  openJobPayModal(job: any): void {
     this.jobPayFormData = { ...job };
   }
 
 
-  constructor(private apiService: ApiService, private userAuthService: UserAuthService) { }
+  constructor(private apiService: ApiService, private userAuthService: UserAuthService, private router: Router, private jobService: JobService) { }
 
 
   ngOnInit(): void {
     this.getJobData();
   }
 
-  searchById(id: number| null) {
-    if(id === null){
+  searchById(id: number | null) {
+    if (id === null) {
       this.getJobData();
       return
     }
@@ -119,7 +124,7 @@ export class UserComponent implements OnInit {
   }
 
   searchByCustomerName(name: string) {
-    if(name === ''){
+    if (name === '') {
       this.getJobData();
       return
     }
@@ -136,7 +141,7 @@ export class UserComponent implements OnInit {
   }
 
   searchByPhoneNumber(phoneNumber: string) {
-    if(phoneNumber === ''){
+    if (phoneNumber === '') {
       this.getJobData();
       return
     }
@@ -153,7 +158,7 @@ export class UserComponent implements OnInit {
   }
 
   searchByPhoneModel(phoneModel: string, page: number = 0) {
-    if(phoneModel === ''){
+    if (phoneModel === '') {
       this.getJobData();
       return
     }
@@ -172,7 +177,7 @@ export class UserComponent implements OnInit {
   }
 
   searchByImei(imei: string) {
-    if(imei === ''){
+    if (imei === '') {
       this.getJobData();
       return
     }
@@ -189,7 +194,7 @@ export class UserComponent implements OnInit {
   }
 
   filterByDate(date: string) {
-    if(date === ''){
+    if (date === '') {
       this.getJobData();
       return
     }
@@ -208,7 +213,7 @@ export class UserComponent implements OnInit {
 
 
   filterByStatus(status: string, page: number = 0) {
-    if(status === ''){
+    if (status === '') {
       this.getJobData();
       return
     }
@@ -237,7 +242,7 @@ export class UserComponent implements OnInit {
 
       },
       error: (error) => {
-        this.showFailedAlert('Failed to fetch job data. Please try again later. ' +error);
+        this.showFailedAlert('Failed to fetch job data. Please try again later. ' + error);
       }
     });
   }
@@ -261,7 +266,7 @@ export class UserComponent implements OnInit {
         this.showSuccessAlert(response.message);
         this.getJobData();
         this.resetJobSaveForm(jobSaveForm);
-        
+
       },
         (error => {
           this.showFailedAlert(error);
@@ -293,7 +298,7 @@ export class UserComponent implements OnInit {
     if (jobUpdateForm.valid) {
       this.apiService.updateJob(jobUpdateForm.value).subscribe((response: any) => {
         this.showSuccessAlert(response.message);
-        this.getJobData();  
+        this.getJobData();
       },
         (error => {
           this.showFailedAlert(error);
@@ -303,11 +308,11 @@ export class UserComponent implements OnInit {
   }
 
 
-  jobRepair(jobRepairForm: NgForm){
+  jobRepair(jobRepairForm: NgForm) {
     if (jobRepairForm.valid) {
       this.apiService.jobRepair(jobRepairForm.value).subscribe((response: any) => {
         this.showSuccessAlert(response.message);
-        this.getJobData(); 
+        this.getJobData();
       },
         (error => {
           this.showFailedAlert(error);
@@ -316,15 +321,47 @@ export class UserComponent implements OnInit {
     }
   }
 
-  jobPay(jobPayForm: NgForm){
-      this.apiService.payJob(jobPayForm.value).subscribe((response: any) => {
-        this.showSuccessAlert(response.message);
-        this.getJobData(); 
+  jobPay(jobPayForm: NgForm) {
+    this.apiService.payJob(jobPayForm.value).subscribe((response: any) => {
+      this.showSuccessAlert(response.message);
+      this.getJobData();
+    },
+      (error => {
+        this.showFailedAlert(error);
+      })
+    );
+  }
+
+  printInvoice(id: number) {
+    this.apiService.searchOneJobById(id).subscribe((response: any) => {
+      this.showSuccessAlert(response.message);
+      this.oneJob= response.data;
+        this.jobService.setJobData(this.oneJob);
+        this.router.navigate(['/invoice']);
+    },
+      (error => {
+        this.showFailedAlert(error);
+      })
+    );
+  }
+
+  jobPayAndPrint(jobPayAndPrint: NgForm, id: number) {
+    this.apiService.payJob(jobPayAndPrint.value).subscribe((response: any) => {
+      this.showSuccessAlert(response.message);
+      this.apiService.searchOneJobById(id).subscribe((response: any) => {
+        this.oneJob= response.data;
+        this.jobService.setJobData(this.oneJob);
+        this.router.navigate(['/invoice']);
       },
         (error => {
           this.showFailedAlert(error);
         })
       );
+    },
+      (error => {
+        this.showFailedAlert(error);
+      })
+    );
   }
 
 
@@ -357,6 +394,10 @@ export class UserComponent implements OnInit {
     setTimeout(() => {
       this.showFailedResponse = false;
     }, 5000);
+  }
+
+  refreshPage(): void{
+    location.reload()
   }
 
 

@@ -1,0 +1,33 @@
+<div class="invoice-container">
+  <div class="header">
+    <h1 class="text-center"><b>Mega Supply</b></h1>
+    <p class="text-center">No:16 Kurunegala junction Dambulla<br>Phone: 0775164544<br>Email: sudeep.jayarathna@gmail.com</p>
+    <p>Printed on: {{ currentDateTime }}</p>
+  </div>
+
+  <div class="customer-info">
+    <h2 class="text-center">Customer Information</h2>
+    <p style="font-weight: bold;">Name: {{ jobData.customerName }}<br>Phone No: {{ jobData.phoneNumber }}</p>
+  </div>
+
+  <div class="job-info">
+    <h2 class="text-center">Job Details</h2>
+    <p>Job ID: {{ jobData.id }}<br>
+        Phone Model: {{ jobData.phoneModel }}<br>
+        Sim Card: {{ jobData.hasSimCard }}<br>
+        Memory Card: {{ jobData.hasMemoryCard }}<br>
+        Back Cover: {{ jobData.hasBackCover }}<br>
+        Job Added At: {{ jobData.jobAddedAt | date: 'dd/MM/yyyy'}}<br>
+        Fault: {{ jobData.fault }}<br>
+        Description: {{ jobData.description }}</p>
+  </div>
+
+  <div class="payment-info">
+    <h2 class="text-center">Payment Information</h2><br>
+    <h6 style="font-weight: bold;">Total Payment: LKR.{{ jobData.price }}</h6>
+  </div>
+
+  <div class="footer">
+    <p>Thank you for you come again<br>Software by Prabhashana Jayarathne</p>
+  </div>
+</div>

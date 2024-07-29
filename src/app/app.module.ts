@@ -20,6 +20,7 @@ import { AuthInterceptor } from './auth/auth.interceptor';
 import { ViewlinkComponent } from './component/viewlink/viewlink.component';
 import { ManageuserComponent } from './component/manageuser/manageuser.component';
 import { NumberToArrayPipe } from './number-to-array.pipe';
+import { PaymentComponent } from './component/payment/payment.component';
 
 
 @NgModule({
@@ -36,7 +37,8 @@ import { NumberToArrayPipe } from './number-to-array.pipe';
     UserComponent,
     ViewlinkComponent,
     ManageuserComponent,
-    NumberToArrayPipe
+    NumberToArrayPipe,
+    PaymentComponent
   ],
   imports: [
     BrowserModule,
