@@ -7,7 +7,8 @@ import { Observable } from 'rxjs';
 })
 export class ApiService {
 
-  private BASE_URL = 'http://localhost:8080/api';
+  private BASE_URL = 'https://megaback-production.up.railway.app/api'
+  //private BASE_URL = 'http://localhost:8080/api';
 
   constructor(private http: HttpClient) { }
 
