@@ -106,9 +106,14 @@
             </div>
           </div>
           <div class="mb-3">
-            <label for="userConPassword" class="form-label">Confirm password</label>
-            <input [type]="passwordFieldType" type="password" class="form-control" id="userConfirmPassword"
-              placeholder="Enter confirm password" name="userConfirmPassword" required>
+            <label for="userConPassword" class="form-label">Confirm Password</label>
+            <input [type]="passwordFieldType" class="form-control" id="confirmPassword"
+              placeholder="Enter confirm password" name="confirmPassword" [(ngModel)]="form.confirmPassword" required
+              #confirmPassword="ngModel">
+            <div *ngIf="confirmPassword.invalid && (confirmPassword.dirty || confirmPassword.touched)" class="text-danger">
+              <div *ngIf="confirmPassword.errors?.['required']">Confirm password is required.</div>
+              <div *ngIf="form.password !== form.confirmPassword && confirmPassword.touched">Passwords do not match.</div>
+            </div>
           </div>
           <div class="mb-3">
             <label for="userPhoneNo" class="form-label">Phone number</label>
@@ -141,7 +146,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary" [disabled]="userSaveForm.invalid" data-bs-dismiss="modal">Save
+            <button type="submit" class="btn btn-primary" [disabled]="userSaveForm.invalid || form.password !== form.confirmPassword" data-bs-dismiss="modal">Save
               User</button>
           </div>
         </form>

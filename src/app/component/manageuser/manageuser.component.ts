@@ -37,6 +37,7 @@ export class ManageuserComponent implements OnInit {
     name: '',
     email: '',
     password: '',
+    confirmPassword: '',
     phoneNumber: '',
     idNumber: ''
 
@@ -115,12 +116,13 @@ export class ManageuserComponent implements OnInit {
 
   addUserAccount(userSaveForm: NgForm) {
 
-    if (userSaveForm.valid) {
+    if (userSaveForm.valid && this.form.password === this.form.confirmPassword) {
       if (this.selectedRole === 'USER') {
         this.apiService.addUserAccount(userSaveForm.value).subscribe((response: any) => {
           this.showSuccessAlert(response.message);
           this.getUserData();
           userSaveForm.resetForm();
+          this.selectedRole= 'USER';
 
         },
           (error => {
@@ -142,6 +144,10 @@ export class ManageuserComponent implements OnInit {
       } else {
         this.showFailedAlert('Something went wrong relevent user role!');
         userSaveForm.resetForm();
+      }
+    }else{
+      if (this.form.password !== this.form.confirmPassword) {
+        this.showFailedAlert('Passwords do not match!');
       }
     }
   }
