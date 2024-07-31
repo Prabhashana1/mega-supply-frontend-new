@@ -120,25 +120,28 @@ export class ManageuserComponent implements OnInit {
         this.apiService.addUserAccount(userSaveForm.value).subscribe((response: any) => {
           this.showSuccessAlert(response.message);
           this.getUserData();
-          window.location.reload();
+          userSaveForm.resetForm();
+
         },
           (error => {
             this.showFailedAlert(error);
-
+            userSaveForm.resetForm();
           })
         );
       } else if (this.selectedRole === 'ADMIN') {
         this.apiService.addAdminAccount(userSaveForm.value).subscribe((response: any) => {
           this.showSuccessAlert(response.message);
           this.getUserData();
+          userSaveForm.resetForm();
         },
           (error => {
             this.showFailedAlert(error);
-
+            userSaveForm.resetForm();
           })
         );
       } else {
         this.showFailedAlert('Something went wrong relevent user role!');
+        userSaveForm.resetForm();
       }
     }
   }
