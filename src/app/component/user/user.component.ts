@@ -85,11 +85,9 @@ export class UserComponent implements OnInit {
   }
 
   openJobRepairModal(job: any): void {
-    this.selectedJobData = job;
-    console.log(this.selectedJobData);
     console.log(job);
     
-    this.jobRepairForm = { ...job };
+    this.selectedJobData = job;
   }
 
   openJobUpdateModal(job: any): void {
