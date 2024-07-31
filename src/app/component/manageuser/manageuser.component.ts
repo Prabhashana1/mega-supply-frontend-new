@@ -5,6 +5,7 @@ import { UserSaveForm } from 'src/app/model/UserSave';
 import { UserUpdateForm } from 'src/app/model/UserUpdate';
 import { ApiService } from 'src/app/service/api.service';
 import { UserAuthService } from 'src/app/service/user-auth.service';
+import { UserDataService } from 'src/app/service/user-data.service';
 
 @Component({
   selector: 'app-manageuser',
@@ -21,10 +22,10 @@ export class ManageuserComponent implements OnInit {
   message: string = '';
   selectedRole: string;
   passwordFieldType: string = 'password';
-  //deleteUserData: any;
+  deleteUserData: any = this.userDataService.getUserData();
 
 
-  constructor(private apiService: ApiService) {
+  constructor(private apiService: ApiService, private userDataService: UserDataService) {
     this.selectedRole = 'USER';
   }
 
@@ -72,8 +73,7 @@ export class ManageuserComponent implements OnInit {
   }
 
   openDeleteModelWithData(user: any){
-    //this.deleteUserData = { ...user};
-    console.log(user);
+    this.userDataService.setUserData(user);
     
  }
 

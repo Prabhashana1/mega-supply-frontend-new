@@ -285,15 +285,13 @@
         </button>
       </div>
       <div class="modal-body">
-        Are you sure you want delete ? <span style="color: red;">sskkexelckel</span>
+        Are you sure you want delete ? <span style="color: red;">{{deleteUserData.name}}</span>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button  type="button" class="btn btn-danger"
+        <button (click)="deleteUser(deleteUserData.id)" type="button" class="btn btn-danger"
           data-bs-dismiss="modal">Delete</button>
       </div>
     </div>
   </div>
 </div>
-
-<!--(click)="deleteUser(deleteUserData.id)"-->
