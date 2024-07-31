@@ -71,11 +71,11 @@ export class ManageuserComponent implements OnInit {
     this.updateFormData = { ...user }; // Populate form data with selected user's data
   }
 
-  //openDeleteModelWithData(user: any){
+  openDeleteModelWithData(user: any){
     //this.deleteUserData = { ...user};
-    //console.log(user);
+    console.log(user);
     
- // }
+ }
 
   resetPassword(resetPasswordForm: NgForm) {
     if (resetPasswordForm.valid) {
