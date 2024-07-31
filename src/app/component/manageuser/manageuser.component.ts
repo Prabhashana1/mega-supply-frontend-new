@@ -68,8 +68,8 @@ export class ManageuserComponent implements OnInit {
     });
   }
 
-  openUpdateModal(user: any) {
-    this.updateFormData = { ...user }; // Populate form data with selected user's data
+  addUserDataForUpdate(user: any) {
+    this.updateFormData = user;
   }
 
   addUserDataForDeleteUser(user: any) {

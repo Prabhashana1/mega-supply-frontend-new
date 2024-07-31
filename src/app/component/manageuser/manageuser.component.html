@@ -51,125 +51,23 @@
               <td>{{user.idNumber}}</td>
               <td>{{user.userRole}}</td>
               <td>
-                <button type="button" class="btn btn-sm btn-success" (click)="openUpdateModal(user)"
-                  data-bs-toggle="modal" [attr.data-bs-target]="'#updateModal'+user.id">Update</button>
+                <button type="button" class="btn btn-sm btn-success" (click)="addUserDataForUpdate(user)"
+                  data-bs-toggle="modal" data-bs-target="#updateModal">Update</button>
                 <button type="button" class="btn btn-sm btn-warning mx-1" data-bs-toggle="modal"
                   data-bs-target="#resetPasswordModal" (click)="addUserDataForRestPassword(user)">Reset
                   Password</button>
                 <button type="button" class="btn btn-sm btn-danger" (click)="addUserDataForDeleteUser(user)"
                   data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
               </td>
-
-
-              <!-- Update Modal -->
-              <div class="modal fade" [id]="'updateModal'+user.id" tabindex="-1" role="dialog"
-                aria-labelledby="updateModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="updateModalLabel">Update User</h5>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                      <form #updateForm="ngForm" (ngSubmit)="updateUser(updateForm)">
-                        <input type="hidden" [(ngModel)]="updateFormData.id" name="id">
-                        <div class="mb-3">
-                          <label for="updateUserName" class="form-label">User's Name</label>
-                          <input type="text" class="form-control" id="updateUserName" name="name" required
-                            [(ngModel)]="updateFormData.name" #name="ngModel">
-                          <div *ngIf="name.invalid && (name.dirty || name.touched)" class="text-danger">
-                            <div *ngIf="name.errors?.['required']">Name is required.</div>
-                          </div>
-                        </div>
-                        <div class="mb-3">
-                          <label for="updateUserEmail" class="form-label">Email address</label>
-                          <input type="email" class="form-control" id="updateUserEmail" name="email" required
-                            [(ngModel)]="updateFormData.email" #email="ngModel"
-                            pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$">
-                          <div *ngIf="email.invalid && (email.dirty || email.touched)" class="text-danger">
-                            <div *ngIf="email.errors?.['required']">Email is required.</div>
-                            <div *ngIf="email.errors?.['pattern'] || email.errors?.['email']">Please enter a valid
-                              email.</div>
-                          </div>
-                        </div>
-                        <div class="mb-3">
-                          <label for="updateUserPhoneNo" class="form-label">Phone number</label>
-                          <input type="text" class="form-control" id="updateUserPhoneNo" name="phoneNumber" required
-                            [(ngModel)]="updateFormData.phoneNumber" #phoneNumber="ngModel" [pattern]="'^0[0-9]{9}$'">
-                          <div *ngIf="phoneNumber.invalid && (phoneNumber.dirty || phoneNumber.touched)"
-                            class="text-danger">
-                            <div *ngIf="phoneNumber.errors?.['required']">Phone number is required.</div>
-                            <div *ngIf="phoneNumber.errors?.['pattern']">Phone number must start with 0 and be 10 digits
-                              long.</div>
-                          </div>
-                        </div>
-                        <div class="mb-3">
-                          <label for="updateUserIdNo" class="form-label">ID Number</label>
-                          <input type="text" class="form-control" id="updateUserIdNo" name="idNumber" required
-                            [(ngModel)]="updateFormData.idNumber" #idNumber="ngModel">
-                          <div *ngIf="idNumber.invalid && (idNumber.dirty || idNumber.touched)" class="text-danger">
-                            <div *ngIf="idNumber.errors?.['required']">ID Number is required.</div>
-                          </div>
-                        </div>
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                          <button type="submit" class="btn btn-primary" [disabled]="updateForm.invalid"
-                            data-bs-dismiss="modal">Update User</button>
-                        </div>
-                      </form>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-
-
-              <div class="modal fade" [id]="'resetPasswordModal'+user.id" tabindex="-1" role="dialog"
-                aria-labelledby="resetPasswordModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="updateModalLabel">Reset User Password</h5>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                      <form #resetPasswordForm="ngForm" (ngSubmit)="resetPassword(resetPasswordForm)">
-                        <input type="hidden" [(ngModel)]="resetPasswordFormData.id" name="id">
-                        <div class="mb-3">
-                          <label for="updatePassword" class="form-label">Password</label>
-                          <input [type]="passwordFieldType" type="password" class="form-control" id="updatePassword"
-                            name="password" required [(ngModel)]="resetPasswordFormData.password"
-                            placeholder="Enter your new password">
-                        </div>
-                        <div class="mb-3">
-                          <label for="updateConfirmPassword" class="form-label">Confirm Password</label>
-                          <input [type]="passwordFieldType" type="password" class="form-control"
-                            id="updateConfirmPassword" name="confirmPassword" placeholder="Enter confrim new password"
-                            required>
-                        </div>
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" id="showPassword"
-                            (change)="togglePasswordVisibility()">
-                          <label class="form-check-label" for="showPassword">Show Password</label>
-                        </div>
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                          <button type="submit" class="btn btn-warning" data-bs-dismiss="modal">Reset Password</button>
-                        </div>
-                      </form>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
             </tr>
           </tbody>
         </table>
       </div>
     </div>
   </div>
-
 </div>
+
+
 
 <div class="modal fade" id="addFormModal" tabindex="-1" aria-labelledby="addFormModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -275,8 +173,8 @@
 </div>
 
 
-<div class="modal fade" id="resetPasswordModal" tabindex="-1" role="dialog"
-  aria-labelledby="resetPasswordModalLabel" aria-hidden="true">
+<div class="modal fade" id="resetPasswordModal" tabindex="-1" role="dialog" aria-labelledby="resetPasswordModalLabel"
+  aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -307,6 +205,69 @@
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             <button type="submit" class="btn btn-warning" data-bs-dismiss="modal">Reset Password</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="updateModalLabel">Update User</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form #updateForm="ngForm" (ngSubmit)="updateUser(updateForm)">
+          <input type="hidden" [(ngModel)]="updateFormData.id" name="id">
+          <div class="mb-3">
+            <label for="updateUserName" class="form-label">User's Name</label>
+            <input type="text" class="form-control" id="updateUserName" name="name" required
+              [(ngModel)]="updateFormData.name" #name="ngModel">
+            <div *ngIf="name.invalid && (name.dirty || name.touched)" class="text-danger">
+              <div *ngIf="name.errors?.['required']">Name is required.</div>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="updateUserEmail" class="form-label">Email address</label>
+            <input type="email" class="form-control" id="updateUserEmail" name="email" required
+              [(ngModel)]="updateFormData.email" #email="ngModel"
+              pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$">
+            <div *ngIf="email.invalid && (email.dirty || email.touched)" class="text-danger">
+              <div *ngIf="email.errors?.['required']">Email is required.</div>
+              <div *ngIf="email.errors?.['pattern'] || email.errors?.['email']">Please enter a valid
+                email.</div>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="updateUserPhoneNo" class="form-label">Phone number</label>
+            <input type="text" class="form-control" id="updateUserPhoneNo" name="phoneNumber" required
+              [(ngModel)]="updateFormData.phoneNumber" #phoneNumber="ngModel" [pattern]="'^0[0-9]{9}$'">
+            <div *ngIf="phoneNumber.invalid && (phoneNumber.dirty || phoneNumber.touched)" class="text-danger">
+              <div *ngIf="phoneNumber.errors?.['required']">Phone number is required.</div>
+              <div *ngIf="phoneNumber.errors?.['pattern']">Phone number must start with 0 and be 10 digits
+                long.</div>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="updateUserIdNo" class="form-label">ID Number</label>
+            <input type="text" class="form-control" id="updateUserIdNo" name="idNumber" required
+              [(ngModel)]="updateFormData.idNumber" #idNumber="ngModel">
+            <div *ngIf="idNumber.invalid && (idNumber.dirty || idNumber.touched)" class="text-danger">
+              <div *ngIf="idNumber.errors?.['required']">ID Number is required.</div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary" [disabled]="updateForm.invalid" data-bs-dismiss="modal">Update
+              User</button>
           </div>
         </form>
       </div>
