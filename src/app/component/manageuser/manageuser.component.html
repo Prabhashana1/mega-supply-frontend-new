@@ -54,35 +54,12 @@
                 <button type="button" class="btn btn-sm btn-success" (click)="openUpdateModal(user)"
                   data-bs-toggle="modal" [attr.data-bs-target]="'#updateModal'+user.id">Update</button>
                 <button type="button" class="btn btn-sm btn-warning mx-1" data-bs-toggle="modal"
-                  [attr.data-bs-target]="'#resetPasswordModal'+user.id">Reset Password</button>
-                <!--<button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal"
-                  [attr.data-bs-target]="'#deleteModal'+user.id">Delete</button>-->
-                <button type="button" class="btn btn-sm btn-danger" (click)="openDeleteModalWithData(user)"
+                  data-bs-target="#resetPasswordModal" (click)="addUserDataForRestPassword(user)">Reset
+                  Password</button>
+                <button type="button" class="btn btn-sm btn-danger" (click)="addUserDataForDeleteUser(user)"
                   data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
               </td>
 
-
-              <!--
-              <div class="modal fade" [id]="'deleteModal'+user.id" tabindex="-1" role="dialog"
-                aria-labelledby="deleteModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="deleteModalLabel" style="color: red;">Delete Confirmation</h5>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                      </button>
-                    </div>
-                    <div class="modal-body">
-                      Are you sure you want delete ? <span style="color: red;">{{user.name}}</span>
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                      <button (click)="deleteUser(user.id)" type="button" class="btn btn-danger"
-                        data-bs-dismiss="modal">Delete</button>
-                    </div>
-                  </div>
-                </div>
-              </div>-->
 
               <!-- Update Modal -->
               <div class="modal fade" [id]="'updateModal'+user.id" tabindex="-1" role="dialog"
@@ -275,8 +252,9 @@
   </div>
 </div>
 
-<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel"
-  aria-hidden="true">
+
+<!--Model for user and i have to use store user data for any type variable-->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -285,12 +263,52 @@
         </button>
       </div>
       <div class="modal-body">
-        Are you sure you want delete ? <span style="color: red;">{{selectedUserForDeletion?.name}}</span>
+        Are you sure you want delete ? <span style="color: red;">{{selectedUserData?.name}}</span>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button (click)="deleteUser(selectedUserForDeletion.id)" type="button" class="btn btn-danger"
+        <button (click)="deleteUser(selectedUserData.id)" type="button" class="btn btn-danger"
           data-bs-dismiss="modal">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="resetPasswordModal" tabindex="-1" role="dialog"
+  aria-labelledby="resetPasswordModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="updateModalLabel">Reset User Password</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form #resetPasswordForm="ngForm" (ngSubmit)="resetPassword(resetPasswordForm)">
+          <input type="hidden" [(ngModel)]="resetPasswordFormData.id" name="id">
+          <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input type="email" class="form-control" value="{{selectedUserData?.email}}" disabled="true">
+          </div>
+          <div class="mb-3">
+            <label for="updatePassword" class="form-label">Password</label>
+            <input [type]="passwordFieldType" type="password" class="form-control" id="updatePassword" name="password"
+              required [(ngModel)]="resetPasswordFormData.password" placeholder="Enter your new password">
+          </div>
+          <div class="mb-3">
+            <label for="updateConfirmPassword" class="form-label">Confirm Password</label>
+            <input [type]="passwordFieldType" type="password" class="form-control" id="updateConfirmPassword"
+              name="confirmPassword" placeholder="Enter confrim new password" required>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="showPassword" (change)="togglePasswordVisibility()">
+            <label class="form-check-label" for="showPassword">Show Password</label>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-warning" data-bs-dismiss="modal">Reset Password</button>
+          </div>
+        </form>
       </div>
     </div>
   </div>
