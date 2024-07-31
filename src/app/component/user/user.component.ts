@@ -7,8 +7,6 @@ import { JobSaveForm } from 'src/app/model/JobSave';
 import { JobUpdateForm } from 'src/app/model/JobUpdate';
 import { ApiService } from 'src/app/service/api.service';
 import { UserAuthService } from 'src/app/service/user-auth.service';
-import { PaymentComponent } from '../payment/payment.component';
-import { JsonPipe } from '@angular/common';
 import { JobService } from 'src/app/service/job.service';
 
 @Component({
@@ -44,6 +42,7 @@ export class UserComponent implements OnInit {
   pageSizeForStatus: number = 50;
   Math = Math;
   oneJob: any;
+  selectedJobData: any = null;
 
 
   saveFormData: JobSaveForm = {
@@ -86,6 +85,7 @@ export class UserComponent implements OnInit {
   }
 
   openJobRepairModal(job: any): void {
+    this.selectedJobData = job;
     this.jobRepairForm = { ...job };
   }
 

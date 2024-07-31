@@ -24,7 +24,8 @@
             <div class="input-group">
                 <button type="button" class="btn btn-sm btn-primary rounded" data-bs-toggle="modal"
                     data-bs-target="#addJobFromModal">Add New Job</button>
-                    <button type="button" class="btn btn-success mx-1 rounded btn-sm" (click)="refreshPage()">Refresh</button>
+                <button type="button" class="btn btn-success mx-1 rounded btn-sm"
+                    (click)="refreshPage()">Refresh</button>
                 <select class="form-select mx-2 rounded" [(ngModel)]="searchOption">
                     <option value="Select Search Option">Select Search Option</option>
                     <option value="id">Search by Job ID</option>
@@ -164,7 +165,7 @@
                             <td>{{job.status}}</td>
                             <td>
                                 <button type="button" class="btn btn-sm btn-info mx-1" (click)="openJobRepairModal(job)"
-                                    data-bs-toggle="modal" [attr.data-bs-target]="'#jobRepairModel'+job.id">Change Job
+                                    data-bs-toggle="modal" data-bs-target="#jobRepairModel">Change Job
                                     Progress</button>
                                 <button type="button" class="btn btn-sm btn-success" (click)="openJobPayModal(job)"
                                     data-bs-toggle="modal" [attr.data-bs-target]="'#jobPayModal'+job.id">Pay</button>
@@ -255,7 +256,7 @@
 
 
 
-                            <div class="modal fade" [id]="'jobRepairModel'+job.id" tabindex="-1" role="dialog"
+                            <!--<div class="modal fade" [id]="'jobRepairModel'+job.id" tabindex="-1" role="dialog"
                                 aria-labelledby="jobRepairModalLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
@@ -310,7 +311,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div>-->
 
 
 
@@ -583,13 +584,77 @@
                             data-bs-dismiss="modal">Save
                             Job</button>
                     </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
+
+
+
+<div class="modal fade" id="jobRepairModel" tabindex="-1" role="dialog" aria-labelledby="jobRepairModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="repairJobModalLabel">Update Job Progress</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form #repairJobForm="ngForm" (ngSubmit)="jobRepair(repairJobForm)">
+                    <input type="hidden" [(ngModel)]="jobRepairForm.id" name="id">
+                    <div class="mb-3">
+                        <label for="id" class="form-label">Job ID</label>
+                        <input type="number" disabled="true" class="form-control" value="{{selectedJobData.id}}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="customerName" class="form-label">Customer Name</label>
+                        <input type="text" disabled="true" class="form-control" value="{{selectedJobData.customerName}}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="customerName" class="form-label">Phone Model</label>
+                        <input type="text" disabled="true" class="form-control" value="{{selectedJobData.phoneModel}}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="customerName" class="form-label">Fault</label>
+                        <input type="text" disabled="true" class="form-control" value="{{selectedJobData.fault}}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="repairStatus" class="form-label">Job Status</label>
+                        <select class="form-control" id="repairStatus" [(ngModel)]="jobRepairForm.status" name="status">
+                            <option value="PENDING">PENDING</option>
+                            <option value="IN_PROGRESS">IN_PROGRESS</option>
+                            <option value="COMPLETED">COMPLETED</option>
+                            <option value="CAN'T_FIX">CAN'T FIX</option>
+                            <option value="WAITING FOR PART">WAITING FOR PART</option>
+                        </select>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Update Job Progress
+                        </button>
+                    </div>
 
                 </form>
             </div>
         </div>
     </div>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 <div class="my-2" *ngIf="totalJobs > pageSize && searchOption ==='Select Search Option'">
