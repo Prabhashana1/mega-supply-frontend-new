@@ -78,7 +78,7 @@ export class ManageuserComponent implements OnInit {
 
 
   addUserDataForRestPassword(user: any){
-    this.selectedUserData = user;
+    this.resetPassword = user;
   }
 
   resetPassword(resetPasswordForm: NgForm) {
