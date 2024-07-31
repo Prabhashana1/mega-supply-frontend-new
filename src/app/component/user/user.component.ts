@@ -41,7 +41,7 @@ export class UserComponent implements OnInit {
   currentPageForStatus: number = 0;
   pageSizeForStatus: number = 50;
   Math = Math;
-  oneJob: any;
+  oneJob: any = null;
   selectedJobData: any = null;
 
 
