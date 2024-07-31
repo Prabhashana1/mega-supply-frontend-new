@@ -165,7 +165,7 @@
                             <td>{{job.status}}</td>
                             <td>
                                 <button type="button" class="btn btn-sm btn-info mx-1" (click)="openJobRepairModal(job)"
-                                    data-bs-toggle="modal" data-bs-target="#jobRepairModel">Change Job
+                                    data-bs-toggle="modal" data-bs-target="#jobRepairModal">Change Job
                                     Progress</button>
                                 <button type="button" class="btn btn-sm btn-success" (click)="openJobPayModal(job)"
                                     data-bs-toggle="modal" [attr.data-bs-target]="'#jobPayModal'+job.id">Pay</button>
@@ -593,7 +593,7 @@
 
 
 
-<div class="modal fade" id="jobRepairModel" tabindex="-1" role="dialog" aria-labelledby="jobRepairModalLabel"
+<div class="modal fade" id="jobRepairModal" tabindex="-1" role="dialog" aria-labelledby="jobRepairModalLabel"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -604,10 +604,6 @@
             <div class="modal-body">
                 <form #repairJobForm="ngForm" (ngSubmit)="jobRepair(repairJobForm)">
                     <input type="hidden" [(ngModel)]="jobRepairForm.id" name="id">
-                    <div class="mb-3">
-                        <label for="id" class="form-label">Job ID</label>
-                        <input type="number" disabled="true" class="form-control" value="{{selectedJobData.id}}">
-                    </div>
                     <div class="mb-3">
                         <label for="customerName" class="form-label">Customer Name</label>
                         <input type="text" disabled="true" class="form-control" value="{{selectedJobData.customerName}}">
