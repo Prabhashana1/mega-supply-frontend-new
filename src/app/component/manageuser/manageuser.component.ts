@@ -21,7 +21,7 @@ export class ManageuserComponent implements OnInit {
   message: string = '';
   selectedRole: string;
   passwordFieldType: string = 'password';
-  deleteUserData: any;
+  //deleteUserData: any;
 
 
   constructor(private apiService: ApiService) {
@@ -71,11 +71,11 @@ export class ManageuserComponent implements OnInit {
     this.updateFormData = { ...user }; // Populate form data with selected user's data
   }
 
-  openDeleteModelWithData(user: any){
-    this.deleteUserData = { ...user};
-    console.log(user);
+  //openDeleteModelWithData(user: any){
+    //this.deleteUserData = { ...user};
+    //console.log(user);
     
-  }
+ // }
 
   resetPassword(resetPasswordForm: NgForm) {
     if (resetPasswordForm.valid) {
