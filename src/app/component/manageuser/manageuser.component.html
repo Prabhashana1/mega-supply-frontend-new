@@ -56,12 +56,15 @@
                   data-bs-toggle="modal" [attr.data-bs-target]="'#updateModal'+user.id">Update</button>
                 <button type="button" class="btn btn-sm btn-warning mx-1" data-bs-toggle="modal"
                   [attr.data-bs-target]="'#resetPasswordModal'+user.id">Reset Password</button>
-                <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal"
-                  data-bs-target="#deleteModal">Delete</button>
+                <!--<button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal"
+                  [attr.data-bs-target]="'#deleteModal'+user.id">Delete</button>-->
+                <button type="button" class="btn btn-sm btn-danger" (click)="openDeleteModelWithData(user)"
+                  data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
               </td>
 
 
-              <!--<div class="modal fade" [id]="'deleteModal'+user.id" tabindex="-1" role="dialog"
+              <!--
+              <div class="modal fade" [id]="'deleteModal'+user.id" tabindex="-1" role="dialog"
                 aria-labelledby="deleteModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
@@ -273,26 +276,23 @@
   </div>
 </div>
 
-
-
-
-<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog"
-                aria-labelledby="deleteModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="deleteModalLabel" style="color: red;">Delete Confirmation</h5>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                      </button>
-                    </div>
-                    <div class="modal-body">
-                      Are you sure you want delete ? <span style="color: red;">fuck</span>
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                      <button (click)="deleteUser(93)" type="button" class="btn btn-danger"
-                        data-bs-dismiss="modal">Delete</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteModalLabel" style="color: red;">Delete Confirmation</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+        </button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want delete ? <span style="color: red;">{{deleteUserData.name}}</span>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button (click)="deleteUser(deleteUserData.id)" type="button" class="btn btn-danger"
+          data-bs-dismiss="modal">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
