@@ -22,7 +22,7 @@ export class ManageuserComponent implements OnInit {
   message: string = '';
   selectedRole: string;
   passwordFieldType: string = 'password';
-  deleteUserData: any = this.userDataService.getUserData();
+  deleteUserData: any;
 
 
   constructor(private apiService: ApiService, private userDataService: UserDataService) {
@@ -74,6 +74,9 @@ export class ManageuserComponent implements OnInit {
 
   openDeleteModelWithData(user: any){
     this.userDataService.setUserData(user);
+    this.deleteUserData = this.userDataService.getUserData();
+    console.log(this.deleteUserData);
+    
     
  }
 
