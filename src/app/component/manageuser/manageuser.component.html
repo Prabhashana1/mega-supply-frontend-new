@@ -57,7 +57,7 @@
                   [attr.data-bs-target]="'#resetPasswordModal'+user.id">Reset Password</button>
                 <!--<button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal"
                   [attr.data-bs-target]="'#deleteModal'+user.id">Delete</button>-->
-                <button type="button" class="btn btn-sm btn-danger" (click)="openDeleteModelWithData(user)"
+                <button type="button" class="btn btn-sm btn-danger" (click)="openDeleteModalWithData(user)"
                   data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
               </td>
 
@@ -285,11 +285,11 @@
         </button>
       </div>
       <div class="modal-body">
-        Are you sure you want delete ? <span style="color: red;">{{deleteUserData.name}}</span>
+        Are you sure you want delete ? <span style="color: red;">{{selectedUserForDeletion?.name}}</span>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button (click)="deleteUser(deleteUserData.id)" type="button" class="btn btn-danger"
+        <button (click)="deleteUser(selectedUserForDeletion.id)" type="button" class="btn btn-danger"
           data-bs-dismiss="modal">Delete</button>
       </div>
     </div>

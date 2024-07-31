@@ -5,7 +5,6 @@ import { UserSaveForm } from 'src/app/model/UserSave';
 import { UserUpdateForm } from 'src/app/model/UserUpdate';
 import { ApiService } from 'src/app/service/api.service';
 import { UserAuthService } from 'src/app/service/user-auth.service';
-import { UserDataService } from 'src/app/service/user-data.service';
 
 @Component({
   selector: 'app-manageuser',
@@ -22,10 +21,10 @@ export class ManageuserComponent implements OnInit {
   message: string = '';
   selectedRole: string;
   passwordFieldType: string = 'password';
-  deleteUserData: any;
+  selectedUserForDeletion: any = null;
 
 
-  constructor(private apiService: ApiService, private userDataService: UserDataService) {
+  constructor(private apiService: ApiService) {
     this.selectedRole = 'USER';
   }
 
@@ -72,13 +71,9 @@ export class ManageuserComponent implements OnInit {
     this.updateFormData = { ...user }; // Populate form data with selected user's data
   }
 
-  openDeleteModelWithData(user: any){
-    this.userDataService.setUserData(user);
-    this.deleteUserData = this.userDataService.getUserData();
-    console.log(this.deleteUserData);
-    
-    
- }
+  openDeleteModalWithData(user: any) {
+    this.selectedUserForDeletion = user;
+  }
 
   resetPassword(resetPasswordForm: NgForm) {
     if (resetPasswordForm.valid) {
