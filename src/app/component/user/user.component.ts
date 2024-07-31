@@ -41,7 +41,7 @@ export class UserComponent implements OnInit {
   currentPageForStatus: number = 0;
   pageSizeForStatus: number = 50;
   Math = Math;
-  oneJob: any = null;
+  oneJob: any;
   selectedJobData: any = null;
 
 
@@ -86,6 +86,9 @@ export class UserComponent implements OnInit {
 
   openJobRepairModal(job: any): void {
     this.selectedJobData = job;
+    console.log(this.selectedJobData);
+    console.log(job);
+    
     this.jobRepairForm = { ...job };
   }
 
