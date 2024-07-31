@@ -1,4 +1,5 @@
 export interface UserPasswordRestForm{
     id: number,
-    password: string
+    password: string,
+    confirmPassword: string
 }

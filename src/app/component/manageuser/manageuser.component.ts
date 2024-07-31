@@ -19,14 +19,12 @@ export class ManageuserComponent implements OnInit {
   showSuccessResponse: boolean = false;
   showFailedResponse: boolean = false;
   message: string = '';
-  selectedRole: string;
+  selectedRole: string = 'USER';
   passwordFieldType: string = 'password';
   selectedUserData: any = null;
-  passwordMismatch: boolean = false;
 
 
   constructor(private apiService: ApiService) {
-    this.selectedRole = 'USER';
   }
 
   ngOnInit(): void {
@@ -53,7 +51,8 @@ export class ManageuserComponent implements OnInit {
 
   resetPasswordFormData: UserPasswordRestForm = {
     id: 0,
-    password: ''
+    password: '',
+    confirmPassword: ''
   }
 
 
@@ -84,7 +83,7 @@ export class ManageuserComponent implements OnInit {
   }
 
   resetPassword(resetPasswordForm: NgForm) {
-    if (resetPasswordForm.valid) {
+    if (resetPasswordForm.valid && this.resetPasswordFormData.password === this.resetPasswordFormData.confirmPassword) {
       this.apiService.resetUserPassword(this.resetPasswordFormData).subscribe({
         next: (response) => {
           this.showSuccessAlert(response.message);
@@ -94,6 +93,10 @@ export class ManageuserComponent implements OnInit {
           this.showFailedAlert(error);
         }
       });
+    }else{
+      if (this.resetPasswordFormData.password !== this.resetPasswordFormData.confirmPassword) {
+        this.showFailedAlert('Passwords do not match!');
+      }
     }
   }
 
@@ -135,15 +138,18 @@ export class ManageuserComponent implements OnInit {
           this.showSuccessAlert(response.message);
           this.getUserData();
           userSaveForm.resetForm();
+          this.selectedRole= 'USER';
         },
           (error => {
             this.showFailedAlert(error);
             userSaveForm.resetForm();
+            this.selectedRole= 'USER';
           })
         );
       } else {
         this.showFailedAlert('Something went wrong relevent user role!');
         userSaveForm.resetForm();
+        this.selectedRole= 'USER';
       }
     }else{
       if (this.form.password !== this.form.confirmPassword) {
