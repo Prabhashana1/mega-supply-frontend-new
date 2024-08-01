@@ -605,6 +605,13 @@
                 <form #repairJobForm="ngForm" (ngSubmit)="jobRepair(repairJobForm)">
                     <input type="hidden" [(ngModel)]="jobRepairForm.id" name="id">
                     <div class="mb-3">
+                        <div class="alert alert-danger alert-dismissible fade show text-center mt-3" role="alert"
+                            *ngIf="showFailedResponse">
+                            {{message}}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+                    <div class="mb-3">
                         <label for="id" class="form-label">Job ID</label>
                         <input type="number" disabled="true" class="form-control" [(ngModel)]="jobRepairForm.id">
                     </div>

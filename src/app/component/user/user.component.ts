@@ -307,16 +307,21 @@ export class UserComponent implements OnInit {
 
 
   jobRepair(jobRepairForm: NgForm) {
-    if (jobRepairForm.valid) {
-      this.apiService.jobRepair(jobRepairForm.value).subscribe((response: any) => {
-        this.showSuccessAlert(response.message);
-        this.getJobData();
-      },
-        (error => {
-          this.showFailedAlert(error);
-        })
-      );
+    if(this.jobRepairForm.status === 'PAID'){
+      this.showFailedAlert('Payment have been made for this job')
+    }else{
+      if (jobRepairForm.valid) {
+        this.apiService.jobRepair(jobRepairForm.value).subscribe((response: any) => {
+          this.showSuccessAlert(response.message);
+          this.getJobData();
+        },
+          (error => {
+            this.showFailedAlert(error);
+          })
+        );
+      }
     }
+  
   }
 
   jobPay(jobPayForm: NgForm) {
