@@ -605,16 +605,8 @@
                 <form #repairJobForm="ngForm" (ngSubmit)="jobRepair(repairJobForm)">
                     <input type="hidden" [(ngModel)]="jobRepairForm.id" name="id">
                     <div class="mb-3">
-                        <label for="customerName" class="form-label">Customer Name</label>
-                        <input type="text" disabled="true" class="form-control" value="{{selectedJobData.customerName}}">
-                    </div>
-                    <div class="mb-3">
-                        <label for="customerName" class="form-label">Phone Model</label>
-                        <input type="text" disabled="true" class="form-control" value="{{selectedJobData.phoneModel}}">
-                    </div>
-                    <div class="mb-3">
-                        <label for="customerName" class="form-label">Fault</label>
-                        <input type="text" disabled="true" class="form-control" value="{{selectedJobData.fault}}">
+                        <label for="id" class="form-label">Job ID</label>
+                        <input type="number" disabled="true" class="form-control" [(ngModel)]="jobRepairForm.id">
                     </div>
                     <div class="mb-3">
                         <label for="repairStatus" class="form-label">Job Status</label>
