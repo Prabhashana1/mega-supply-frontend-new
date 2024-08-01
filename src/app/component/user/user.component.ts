@@ -307,7 +307,7 @@ export class UserComponent implements OnInit {
 
 
   jobRepair(jobRepairForm: NgForm) {
-    if(this.jobRepairForm.status === 'PAID'){
+    if(jobRepairForm.status === 'PAID'){
       this.showFailedAlert('Payment have been made for this job')
     }else{
       if (jobRepairForm.valid) {
