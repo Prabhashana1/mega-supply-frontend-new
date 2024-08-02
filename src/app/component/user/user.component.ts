@@ -8,6 +8,7 @@ import { JobUpdateForm } from 'src/app/model/JobUpdate';
 import { ApiService } from 'src/app/service/api.service';
 import { UserAuthService } from 'src/app/service/user-auth.service';
 import { JobService } from 'src/app/service/job.service';
+import { JobDeleteForm } from 'src/app/model/JobDelete';
 
 @Component({
   selector: 'app-user',
@@ -83,6 +84,10 @@ export class UserComponent implements OnInit {
     status: ''
   }
 
+  jobDeleteForm: JobDeleteForm ={
+    id: 0
+  }
+
   openJobRepairModal(job: any): void {
     this.jobRepairForm = job;
   }
@@ -94,6 +99,10 @@ export class UserComponent implements OnInit {
 
   openJobPayModal(job: any): void {
     this.jobPayFormData = { ...job };
+  }
+
+  openJobDeleteModal(job: any): void{
+    this.jobDeleteForm = { ...job };
   }
 
 
@@ -307,14 +316,7 @@ export class UserComponent implements OnInit {
 
 
   jobRepair(jobRepairForm: NgForm) {
-    console.log(jobRepairForm.value);
-    console.log(jobRepairForm);
-    console.log(this.jobRepairForm);
-    
-    
-    
-    console.log(jobRepairForm.value.status);
-    
+
     if(jobRepairForm.value.status === 'PAID'){
       this.showFailedAlert('Payment have been made for this job')
     }else{
@@ -377,14 +379,19 @@ export class UserComponent implements OnInit {
 
 
   deleteJob(jobId: number) {
-    this.apiService.deleteJob(jobId).subscribe((response: any) => {
-      this.showSuccessAlert(response.message);
-      this.getJobData();
-    },
-      (error => {
-        this.showFailedAlert(error);
-      })
-    );
+
+    if(jobId === 0){
+      this.showFailedAlert('Not job selected correctly. Please try again');
+    }else{
+      this.apiService.deleteJob(jobId).subscribe((response: any) => {
+        this.showSuccessAlert(response.message);
+        this.getJobData();
+      },
+        (error => {
+          this.showFailedAlert(error);
+        })
+      );
+    }
   }
 
   checkAdmin(): boolean {
