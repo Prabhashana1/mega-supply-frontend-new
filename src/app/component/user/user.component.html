@@ -213,9 +213,9 @@
                             [disabled]="jobPayForm.invalid" (click)="printInvoice(jobPayFormData.id)">Print
                             Invoice</button>
                         <button type="submit" class="btn btn-primary" (click)="jobPay(jobPayForm)"
-                            data-bs-dismiss="modal" [disabled]="jobPayForm.invalid && isPaid">Pay</button>
+                            data-bs-dismiss="modal" [disabled]="jobPayForm.invalid || isPaid">Pay</button>
                         <button type="submit" class="btn btn-success" data-bs-dismiss="modal"
-                            [disabled]="jobPayForm.invalid && isPaid" (click)="jobPayAndPrint(jobPayForm, jobPayFormData.id)">Pay
+                            [disabled]="jobPayForm.invalid || isPaid" (click)="jobPayAndPrint(jobPayForm, jobPayFormData.id)">Pay
                             & Print
                             Invoice</button>
                     </div>

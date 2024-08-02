@@ -102,9 +102,11 @@ export class UserComponent implements OnInit {
 
   openJobPayModal(job: any): void {
     if(job.status === 'PAID'){
+      this.jobPayFormData = { ...job };
       this.isPaid = true;
     }else{
       this.jobPayFormData = { ...job };
+      this.isPaid = false;
     }
   }
 
