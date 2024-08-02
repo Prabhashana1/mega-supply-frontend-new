@@ -1,32 +1,57 @@
 <nav class="navbar navbar-expand-lg">
-    <div class="container-fluid">
-      <a class="navbar-brand" routerLink="/home">MEGA SUPPLY</a>
-  
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-  
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto"> <li class="nav-item">
-            <a class="nav-link" aria-current="page" routerLink="/home">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/aboutus">About Us</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/contact">Contact</a>
-          </li>
-          <li *ngIf="userService.roleEqual('ADMIN')" class="nav-item">
-            <a class="nav-link" routerLink="/admin">Admin Dashboard</a>
-          </li>
-          <li *ngIf="userService.roleEqual('EMPLOYEE') || userService.roleEqual('ADMIN') " class="nav-item">
-            <a class="nav-link" routerLink="/user">User Dashboard</a>
-          </li>
-        </ul>
-  
-        <a *ngIf="!isLoggedIn()" class="btn btn-primary" routerLink="/login">Login</a>
-        <a *ngIf="isLoggedIn()" class="btn btn-danger" (click)="logout()">Logout</a>
+  <div class="container-fluid">
+    <a class="navbar-brand" routerLink="/home">MEGA SUPPLY</a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link" aria-current="page" routerLink="/home">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/aboutus">About Us</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/contact">Contact</a>
+        </li>
+        <li *ngIf="userService.roleEqual('ADMIN')" class="nav-item">
+          <a class="nav-link" routerLink="/admin">Admin Dashboard</a>
+        </li>
+        <li *ngIf="userService.roleEqual('EMPLOYEE') || userService.roleEqual('ADMIN') " class="nav-item">
+          <a class="nav-link" routerLink="/user">User Dashboard</a>
+        </li>
+      </ul>
+
+      <a *ngIf="!isLoggedIn()" class="btn btn-primary" routerLink="/login">Login</a>
+      <a *ngIf="isLoggedIn()" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#logoutModal">Logout</a>
+    </div>
+  </div>
+</nav>
+
+
+
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="logoutModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="logoutModalLabel" style="color: red;">Logout
+          Confirmation</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+        </button>
+      </div>
+      <div class="modal-body" style="color: red;">
+        Are you sure you want logout ?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+        <button (click)="logout()" type="button" class="btn btn-danger"
+          data-bs-dismiss="modal">Yes</button>
       </div>
     </div>
-  </nav>
-  
+  </div>
+</div>
