@@ -168,10 +168,10 @@
                                     data-bs-toggle="modal" data-bs-target="#jobRepairModal">Change Job
                                     Progress</button>
                                 <button type="button" class="btn btn-sm btn-success" (click)="openJobPayModal(job)"
-                                    data-bs-toggle="modal" [attr.data-bs-target]="'#jobPayModal'+job.id">Pay</button>
+                                    data-bs-toggle="modal" data-bs-target="#jobPayModal">Pay</button>
                                 <button type="button" class="btn btn-sm btn-warning mx-1"
                                     (click)="openJobUpdateModal(job)" data-bs-toggle="modal"
-                                    [attr.data-bs-target]="'#jobUpdateModel'+job.id">Update</button>
+                                    data-bs-target="#jobUpdateModel">Update</button>
                                 <button *ngIf="isAdmin" type="button" class="btn btn-sm btn-danger"
                                     data-bs-toggle="modal" data-bs-target="#deleteModal" (click)="openJobDeleteModal(job)">Delete</button>
                             </td>
@@ -613,7 +613,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="repairStatus" class="form-label">Job Status</label>
-                        <select class="form-control" id="repairStatus" [(ngModel)]="jobRepairForm.status" name="status">
+                        <select class="form-control" id="repairStatus" [value]="jobRepairForm.status" name="status">
                             <option value="PENDING">PENDING</option>
                             <option value="IN_PROGRESS">IN_PROGRESS</option>
                             <option value="COMPLETED">COMPLETED</option>
