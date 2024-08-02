@@ -164,8 +164,8 @@
                             <td>{{job.repairedBy}}</td>
                             <td>{{job.status}}</td>
                             <td>
-                                <button type="button" *ngIf="job.status !== 'PAID'" class="btn btn-sm btn-info mx-1" (click)="openJobRepairModal(job)"
-                                    data-bs-toggle="modal" data-bs-target="#jobRepairModal">Change Job
+                                <button type="button" class="btn btn-sm btn-info mx-1" (click)="openJobRepairModal(job)"
+                                    data-bs-toggle="modal" data-bs-target="#jobRepairModal" [disabled]="job.status === 'PAID'">Change Job
                                     Progress</button>
                                 <button type="button" class="btn btn-sm btn-success" (click)="openJobPayModal(job)"
                                     data-bs-toggle="modal" data-bs-target="#jobPayModal">Pay</button>
