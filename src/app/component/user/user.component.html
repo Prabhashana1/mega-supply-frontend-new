@@ -176,210 +176,6 @@
                                     data-bs-toggle="modal" data-bs-target="#deleteModal"
                                     (click)="openJobDeleteModal(job)">Delete</button>
                             </td>
-
-
-
-                            <!--<div class="modal fade" [id]="'jobPayModal'+job.id" tabindex="-1"
-                                aria-labelledby="jobPayModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="jobPayModalLabel">Job Payment</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <form #jobPayForm="ngForm">
-                                                <input type="hidden" [(ngModel)]="jobPayFormData.id" name="id">
-                                                <div class="mb-3">
-                                                    <label for="customerName" class="form-label">Customer Name</label>
-                                                    <input type="text" disabled="true" class="form-control"
-                                                        value="{{job.customerName}}">
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label for="customerName" class="form-label">Phone Model</label>
-                                                    <input type="text" disabled="true" class="form-control"
-                                                        value="{{job.phoneModel}}">
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label for="customerName" class="form-label">Fault</label>
-                                                    <input type="text" disabled="true" class="form-control"
-                                                        value="{{job.fault}}">
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label for="price" class="form-label">Price</label>
-                                                    <input type="number" class="form-control" id="price"
-                                                        [(ngModel)]="jobPayFormData.price" name="price" required>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary"
-                                                        data-bs-dismiss="modal">Close</button>
-                                                    <button type="submit" class="btn btn-info" data-bs-dismiss="modal"
-                                                        [disabled]="jobPayForm.invalid"
-                                                        (click)="printInvoice(job.id)">Print Invoice</button>
-                                                    <button type="submit" class="btn btn-primary"
-                                                        (click)="jobPay(jobPayForm)" data-bs-dismiss="modal"
-                                                        [disabled]="jobPayForm.invalid">Pay</button>
-                                                    <button type="submit" class="btn btn-success"
-                                                        data-bs-dismiss="modal" [disabled]="jobPayForm.invalid"
-                                                        (click)="jobPayAndPrint(jobPayForm, job.id)">Pay & Print
-                                                        Invoice</button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>-->
-
-
-
-                            <!-- Job Update Modal -->
-                            <div class="modal fade" [id]="'jobUpdateModel'+job.id" tabindex="-1" role="dialog"
-                                aria-labelledby="jobUpdateModalLabel" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="jobUpdateModalLabel">Update Job</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <form #updateJobForm="ngForm" (ngSubmit)="jobUpdate(updateJobForm)">
-                                                <input type="hidden" [(ngModel)]="jobUpdateFormData.id" name="id">
-                                                <div class="mb-3">
-                                                    <label for="id" class="form-label">Job ID</label>
-                                                    <input type="number" disabled="true" class="form-control"
-                                                        value="{{job.id}}">
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label for="customerName" class="form-label">Customer Name</label>
-                                                    <input type="text" class="form-control" id="customerName"
-                                                        name="customerName" placeholder="Enter customer name" required
-                                                        [(ngModel)]="jobUpdateFormData.customerName"
-                                                        #customerName="ngModel">
-                                                    <div *ngIf="customerName.invalid && (customerName.dirty || customerName.touched)"
-                                                        class="text-danger">
-                                                        <div *ngIf="customerName.errors?.['required']">Customer name is
-                                                            required.</div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="mb-3">
-                                                    <label for="phoneNumber" class="form-label">Phone number</label>
-                                                    <input type="text" class="form-control" id="phoneNumber"
-                                                        placeholder="Enter valid phone number" name="phoneNumber"
-                                                        [(ngModel)]="jobUpdateFormData.phoneNumber"
-                                                        #phoneNumber="ngModel" [pattern]="'^0[0-9]{9}$'">
-                                                    <div *ngIf="phoneNumber.invalid && (phoneNumber.dirty)"
-                                                        class="text-danger">
-                                                        <div *ngIf="phoneNumber.errors?.['pattern']">Phone number must
-                                                            start with 0 and be 10 digits
-                                                            long.</div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="mb-3">
-                                                    <label for="phoneModel" class="form-label">Phone Model</label>
-                                                    <input type="text" class="form-control" id="phoneModel"
-                                                        name="phoneModel" placeholder="Enter phone model" required
-                                                        [(ngModel)]="jobUpdateFormData.phoneModel"
-                                                        #phoneModel="ngModel">
-                                                    <div *ngIf="phoneModel.invalid && (phoneModel.dirty || phoneModel.touched)"
-                                                        class="text-danger">
-                                                        <div *ngIf="phoneModel.errors?.['required']">Phone model is
-                                                            required.</div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="mb-3">
-                                                    <label for="imei" class="form-label">IMEI or Serial Number</label>
-                                                    <input type="text" class="form-control" id="imei" name="imei"
-                                                        placeholder="Enter phone IMEI or serial number"
-                                                        [(ngModel)]="jobUpdateFormData.imei">
-                                                </div>
-
-                                                <div class="mb-3">
-                                                    <label for="fault" class="form-label">Fault</label>
-                                                    <input type="text" class="form-control" id="fault" name="fault"
-                                                        placeholder="Enter fault" required
-                                                        [(ngModel)]="jobUpdateFormData.fault" #fault="ngModel">
-                                                    <div *ngIf="fault.invalid && (fault.dirty || fault.touched)"
-                                                        class="text-danger">
-                                                        <div *ngIf="fault.errors?.['required']">Phone fault is required.
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="mb-3">
-                                                    <label for="price" class="form-label">Price</label>
-                                                    <input type="number" class="form-control" id="price" name="price"
-                                                        placeholder="Enter price" [(ngModel)]="jobUpdateFormData.price">
-                                                </div>
-
-                                                <div class="mb-3">
-                                                    <label for="description" class="form-label">Description</label>
-                                                    <input type="text" class="form-control" id="description"
-                                                        name="description" placeholder="Enter description"
-                                                        [(ngModel)]="jobUpdateFormData.description">
-                                                </div>
-
-                                                <div class="form-row">
-                                                    <div class="form-group col-md-4">
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox"
-                                                                id="hasBackCover" name="hasBackCover"
-                                                                [(ngModel)]="jobUpdateFormData.hasBackCover">
-                                                            <label class="form-check-label" for="hasBackCover">Has Back
-                                                                Cover</label>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group col-md-4">
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox"
-                                                                id="hasMemoryCard" name="hasMemoryCard"
-                                                                [(ngModel)]="jobUpdateFormData.hasMemoryCard">
-                                                            <label class="form-check-label" for="hasMemoryCard">Has
-                                                                Memory Card</label>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group col-md-4">
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox"
-                                                                id="hasSimCard" name="hasSimCard"
-                                                                [(ngModel)]="jobUpdateFormData.hasSimCard">
-                                                            <label class="form-check-label" for="hasSimCard">Has Sim
-                                                                Card</label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-
-                                                <div class="mb-3">
-                                                    <label for="status" class="form-label">Job Status</label>
-                                                    <select class="form-control" id="status"
-                                                        [(ngModel)]="jobUpdateFormData.status" name="status">
-                                                        <option value="PENDING">PENDING</option>
-                                                        <option value="IN_PROGRESS">IN_PROGRESS</option>
-                                                        <option value="COMPLETED">COMPLETED</option>
-                                                        <option value="CAN'T_FIX">CAN'T FIX</option>
-                                                        <option value="WAITING FOR PART">WAITING FOR PART</option>
-                                                        <option value="PAID">PAID</option>
-                                                    </select>
-                                                </div>
-
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary"
-                                                        data-bs-dismiss="modal">Close</button>
-                                                    <button type="submit" class="btn btn-primary"
-                                                        [disabled]="updateJobForm.invalid"
-                                                        data-bs-dismiss="modal">Update Job</button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
                         </tr>
                     </tbody>
                 </table>
@@ -414,11 +210,13 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-info" data-bs-dismiss="modal"
-                            [disabled]="jobPayForm.invalid" (click)="printInvoice(jobPayFormData.id)">Print Invoice</button>
+                            [disabled]="jobPayForm.invalid" (click)="printInvoice(jobPayFormData.id)">Print
+                            Invoice</button>
                         <button type="submit" class="btn btn-primary" (click)="jobPay(jobPayForm)"
                             data-bs-dismiss="modal" [disabled]="jobPayForm.invalid">Pay</button>
                         <button type="submit" class="btn btn-success" data-bs-dismiss="modal"
-                            [disabled]="jobPayForm.invalid" (click)="jobPayAndPrint(jobPayForm, jobPayFormData.id)">Pay & Print
+                            [disabled]="jobPayForm.invalid" (click)="jobPayAndPrint(jobPayForm, jobPayFormData.id)">Pay
+                            & Print
                             Invoice</button>
                     </div>
                 </form>
@@ -427,6 +225,135 @@
     </div>
 </div>
 
+
+<div class="modal fade" id="jobUpdateModel" tabindex="-1" role="dialog" aria-labelledby="jobUpdateModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="jobUpdateModalLabel">Update Job</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form #updateJobForm="ngForm" (ngSubmit)="jobUpdate(updateJobForm)">
+                    <input type="hidden" [(ngModel)]="jobUpdateFormData.id" name="id">
+                    <div class="mb-3">
+                        <label for="id" class="form-label">Job ID</label>
+                        <input type="number" disabled="true" class="form-control" value="{{jobUpdateFormData.id}}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="customerName" class="form-label">Customer Name</label>
+                        <input type="text" class="form-control" id="customerName" name="customerName"
+                            placeholder="Enter customer name" required [(ngModel)]="jobUpdateFormData.customerName"
+                            #customerName="ngModel">
+                        <div *ngIf="customerName.invalid && (customerName.dirty || customerName.touched)"
+                            class="text-danger">
+                            <div *ngIf="customerName.errors?.['required']">Customer name is
+                                required.</div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="phoneNumber" class="form-label">Phone number</label>
+                        <input type="text" class="form-control" id="phoneNumber" placeholder="Enter valid phone number"
+                            name="phoneNumber" [(ngModel)]="jobUpdateFormData.phoneNumber" #phoneNumber="ngModel"
+                            [pattern]="'^0[0-9]{9}$'">
+                        <div *ngIf="phoneNumber.invalid && (phoneNumber.dirty)" class="text-danger">
+                            <div *ngIf="phoneNumber.errors?.['pattern']">Phone number must
+                                start with 0 and be 10 digits
+                                long.</div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="phoneModel" class="form-label">Phone Model</label>
+                        <input type="text" class="form-control" id="phoneModel" name="phoneModel"
+                            placeholder="Enter phone model" required [(ngModel)]="jobUpdateFormData.phoneModel"
+                            #phoneModel="ngModel">
+                        <div *ngIf="phoneModel.invalid && (phoneModel.dirty || phoneModel.touched)" class="text-danger">
+                            <div *ngIf="phoneModel.errors?.['required']">Phone model is
+                                required.</div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="imei" class="form-label">IMEI or Serial Number</label>
+                        <input type="text" class="form-control" id="imei" name="imei"
+                            placeholder="Enter phone IMEI or serial number" [(ngModel)]="jobUpdateFormData.imei">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="fault" class="form-label">Fault</label>
+                        <input type="text" class="form-control" id="fault" name="fault" placeholder="Enter fault"
+                            required [(ngModel)]="jobUpdateFormData.fault" #fault="ngModel">
+                        <div *ngIf="fault.invalid && (fault.dirty || fault.touched)" class="text-danger">
+                            <div *ngIf="fault.errors?.['required']">Phone fault is required.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="price" class="form-label">Price</label>
+                        <input type="number" class="form-control" id="price" name="price" placeholder="Enter price"
+                            [(ngModel)]="jobUpdateFormData.price">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Description</label>
+                        <input type="text" class="form-control" id="description" name="description"
+                            placeholder="Enter description" [(ngModel)]="jobUpdateFormData.description">
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="hasBackCover" name="hasBackCover"
+                                    [(ngModel)]="jobUpdateFormData.hasBackCover">
+                                <label class="form-check-label" for="hasBackCover">Has Back
+                                    Cover</label>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="hasMemoryCard" name="hasMemoryCard"
+                                    [(ngModel)]="jobUpdateFormData.hasMemoryCard">
+                                <label class="form-check-label" for="hasMemoryCard">Has
+                                    Memory Card</label>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="hasSimCard" name="hasSimCard"
+                                    [(ngModel)]="jobUpdateFormData.hasSimCard">
+                                <label class="form-check-label" for="hasSimCard">Has Sim
+                                    Card</label>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="mb-3">
+                        <label for="status" class="form-label">Job Status</label>
+                        <select class="form-control" id="status" [(ngModel)]="jobUpdateFormData.status" name="status">
+                            <option value="PENDING">PENDING</option>
+                            <option value="IN_PROGRESS">IN_PROGRESS</option>
+                            <option value="COMPLETED">COMPLETED</option>
+                            <option value="CAN'T_FIX">CAN'T FIX</option>
+                            <option value="WAITING FOR PART">WAITING FOR PART</option>
+                            <option value="PAID">PAID</option>
+                        </select>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary" [disabled]="updateJobForm.invalid"
+                            data-bs-dismiss="modal">Update Job</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 
