@@ -92,13 +92,9 @@ export class UserComponent implements OnInit {
   }
 
   openJobRepairModal(job: any): void {
-    console.log(job);
-    console.log(job.status);
-    
-    
     if(job.status === 'PAID'){
-      this.jobRepairForm = job;
       this.isPaid = true;
+      this.showFailedAlert('Payment have been made for this job');
     }else{
       this.isPaid = false;
       this.jobRepairForm = job;
@@ -336,7 +332,7 @@ export class UserComponent implements OnInit {
 
   jobRepair(jobRepairForm: NgForm) {
     if(this.isPaid){
-      this.showFailedAlert('Payment have been made for this job')
+      this.showFailedAlert('Payment have been made for this job');
       jobRepairForm.resetForm();
     }else{
       if (jobRepairForm.valid) {
