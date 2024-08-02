@@ -173,36 +173,13 @@
                                     (click)="openJobUpdateModal(job)" data-bs-toggle="modal"
                                     data-bs-target="#jobUpdateModel">Update</button>
                                 <button *ngIf="isAdmin" type="button" class="btn btn-sm btn-danger"
-                                    data-bs-toggle="modal" data-bs-target="#deleteModal" (click)="openJobDeleteModal(job)">Delete</button>
+                                    data-bs-toggle="modal" data-bs-target="#deleteModal"
+                                    (click)="openJobDeleteModal(job)">Delete</button>
                             </td>
 
-                            <!--<div class="modal fade" [id]="'deleteModal'+job.id" tabindex="-1" role="dialog"
-                                aria-labelledby="deleteModalLabel" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="deleteModalLabel" style="color: red;">Delete
-                                                Confirmation</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close">
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            Are you sure you want delete job relevent with job ID: <span
-                                                style="color: red;">{{job.id}} ?</span>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary"
-                                                data-bs-dismiss="modal">Close</button>
-                                            <button (click)="deleteJob(job.id)" type="button" class="btn btn-danger"
-                                                data-bs-dismiss="modal">Delete</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>-->
 
 
-                            <div class="modal fade" [id]="'jobPayModal'+job.id" tabindex="-1"
+                            <!--<div class="modal fade" [id]="'jobPayModal'+job.id" tabindex="-1"
                                 aria-labelledby="jobPayModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
@@ -248,65 +225,6 @@
                                                         (click)="jobPayAndPrint(jobPayForm, job.id)">Pay & Print
                                                         Invoice</button>
                                                 </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-
-
-                            <!--<div class="modal fade" [id]="'jobRepairModel'+job.id" tabindex="-1" role="dialog"
-                                aria-labelledby="jobRepairModalLabel" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="repairJobModalLabel">Update Job Progress</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <form #repairJobForm="ngForm" (ngSubmit)="jobRepair(repairJobForm)">
-                                                <input type="hidden" [(ngModel)]="jobRepairForm.id" name="id">
-                                                <div class="mb-3">
-                                                    <label for="id" class="form-label">Job ID</label>
-                                                    <input type="number" disabled="true" class="form-control"
-                                                        value="{{job.id}}">
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label for="customerName" class="form-label">Customer Name</label>
-                                                    <input type="text" disabled="true" class="form-control"
-                                                        value="{{job.customerName}}">
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label for="customerName" class="form-label">Phone Model</label>
-                                                    <input type="text" disabled="true" class="form-control"
-                                                        value="{{job.phoneModel}}">
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label for="customerName" class="form-label">Fault</label>
-                                                    <input type="text" disabled="true" class="form-control"
-                                                        value="{{job.fault}}">
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label for="repairStatus" class="form-label">Job Status</label>
-                                                    <select class="form-control" id="repairStatus"
-                                                        [(ngModel)]="jobRepairForm.status" name="status">
-                                                        <option value="PENDING">PENDING</option>
-                                                        <option value="IN_PROGRESS">IN_PROGRESS</option>
-                                                        <option value="COMPLETED">COMPLETED</option>
-                                                        <option value="CAN'T_FIX">CAN'T FIX</option>
-                                                        <option value="WAITING FOR PART">WAITING FOR PART</option>
-                                                    </select>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary"
-                                                        data-bs-dismiss="modal">Close</button>
-                                                    <button type="submit" class="btn btn-primary"
-                                                        data-bs-dismiss="modal">Update Job Progress
-                                                    </button>
-                                                </div>
-
                                             </form>
                                         </div>
                                     </div>
@@ -469,6 +387,53 @@
         </div>
     </div>
 </div>
+
+
+
+
+
+<div class="modal fade" id="jobPayModal" tabindex="-1" aria-labelledby="jobPayModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="jobPayModalLabel">Job Payment</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form #jobPayForm="ngForm">
+                    <input type="hidden" [(ngModel)]="jobPayFormData.id" name="id">
+                    <div class="mb-3">
+                        <label for="jobId" class="form-label">Job ID</label>
+                        <input type="text" disabled="true" class="form-control" value="{{jobPayFormData.id}}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="price" class="form-label">Price</label>
+                        <input type="number" class="form-control" id="price" [(ngModel)]="jobPayFormData.price"
+                            name="price" required>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-info" data-bs-dismiss="modal"
+                            [disabled]="jobPayForm.invalid" (click)="printInvoice(jobPayFormData.id)">Print Invoice</button>
+                        <button type="submit" class="btn btn-primary" (click)="jobPay(jobPayForm)"
+                            data-bs-dismiss="modal" [disabled]="jobPayForm.invalid">Pay</button>
+                        <button type="submit" class="btn btn-success" data-bs-dismiss="modal"
+                            [disabled]="jobPayForm.invalid" (click)="jobPayAndPrint(jobPayForm, jobPayFormData.id)">Pay & Print
+                            Invoice</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
 
 
 <div class="modal fade" id="addJobFromModal" tabindex="-1" aria-labelledby="addJobFormModalLable" aria-hidden="true">
@@ -646,7 +611,8 @@
                 </button>
             </div>
             <div class="modal-body">
-                Are you sure you want delete job relevent with job ID: <span style="color: red;">{{ jobDeleteForm.id }}</span> ?
+                Are you sure you want delete job relevent with job ID: <span style="color: red;">{{ jobDeleteForm.id
+                    }}</span> ?
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
