@@ -45,6 +45,7 @@ export class UserComponent implements OnInit {
   pageSizeForStatus: number = 50;
   Math = Math;
   oneJob: any;
+  isPaid: boolean = false;
 
 
   saveFormData: JobSaveForm = {
@@ -100,7 +101,11 @@ export class UserComponent implements OnInit {
   }
 
   openJobPayModal(job: any): void {
-    this.jobPayFormData = { ...job };
+    if(job.status === 'PAID'){
+      this.isPaid = true;
+    }else{
+      this.jobPayFormData = { ...job };
+    }
   }
 
   openJobDeleteModal(job: any): void{
