@@ -102,7 +102,7 @@ export class UserComponent implements OnInit {
   }
 
   openJobDeleteModal(job: any): void{
-    this.jobDeleteForm = job;
+    this.jobDeleteForm = { ...job };
     console.log(this.jobDeleteForm);
     
   }
@@ -318,7 +318,8 @@ export class UserComponent implements OnInit {
 
 
   jobRepair(jobRepairForm: NgForm) {
-
+    console.log(jobRepairForm.value);
+    console.log(this.jobRepairForm);
     if(this.jobRepairForm.status === 'PAID'){
       this.showFailedAlert('Payment have been made for this job')
     }else{
