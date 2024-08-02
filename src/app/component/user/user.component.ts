@@ -9,11 +9,13 @@ import { ApiService } from 'src/app/service/api.service';
 import { UserAuthService } from 'src/app/service/user-auth.service';
 import { JobService } from 'src/app/service/job.service';
 import { JobDeleteForm } from 'src/app/model/JobDelete';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
-  styleUrls: ['./user.component.scss']
+  styleUrls: ['./user.component.scss'],
+  providers: [DatePipe]
 })
 export class UserComponent implements OnInit {
 
@@ -114,11 +116,15 @@ export class UserComponent implements OnInit {
   }
 
 
-  constructor(private apiService: ApiService, private userAuthService: UserAuthService, private router: Router, private jobService: JobService) { }
+  constructor(private apiService: ApiService, private userAuthService: UserAuthService, private router: Router, private jobService: JobService, private datePipe: DatePipe) { }
 
 
   ngOnInit(): void {
     this.getJobData();
+  }
+
+  getFormattedDate(dateString: string): string {
+    return this.datePipe.transform(dateString, 'yyyy-MM-dd hh:mm:ss a') || '';
   }
 
   searchById(id: number | null) {

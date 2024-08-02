@@ -155,8 +155,8 @@
                             <td>{{job.fault}}</td>
                             <td>{{job.price}}</td>
                             <td>{{job.description}}</td>
-                            <td>{{job.jobAddedAt}}</td>
-                            <td>{{job.jobReleaseAt}}</td>
+                            <td>{{ getFormattedDate(job.jobAddedAt) }}</td>
+                            <td>{{ getFormattedDate(job.jobReleaseAt) }}</td>
                             <td>{{job.hasBackCover}}</td>
                             <td>{{job.hasMemoryCard}}</td>
                             <td>{{job.hasSimCard}}</td>
