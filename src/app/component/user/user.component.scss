@@ -4,3 +4,12 @@
     text-overflow: ellipsis; /* Add ellipsis for overflowed text */   /* Set a maximum width for the cells */
   }
 
+  .alert-fixed-top {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1050; /* Ensure it's above other content */
+    width: 100%;
+    max-width: 500px; /* Adjust as needed */
+  }

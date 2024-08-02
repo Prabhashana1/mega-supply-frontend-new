@@ -412,6 +412,7 @@ export class UserComponent implements OnInit {
   showFailedAlert(responseMessage: string): void {
     this.showFailedResponse = true;
     this.message = responseMessage;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     setTimeout(() => {
       this.showFailedResponse = false;
     }, 5000);
