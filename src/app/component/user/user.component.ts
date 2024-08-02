@@ -307,7 +307,7 @@ export class UserComponent implements OnInit {
     if(this.newJobId > 0){
       this.apiService.createViewLink(this.newJobId).subscribe((response: any) => {
         this.showSuccessAlert(response.message);
-        this.viewLink = 'https://prabhashana1.github.io/mega-supply-frontend-new/#/viewLink/'+response.data.link;
+        this.viewLink = 'https://prabhashana1.github.io/mega-supply-frontend-new/#/viewLink/'+response.data;
         this.qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(this.viewLink)}`;
       },
       (error => {
