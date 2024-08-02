@@ -92,7 +92,12 @@ export class UserComponent implements OnInit {
   }
 
   openJobRepairModal(job: any): void {
+    console.log(job);
+    console.log(job.status);
+    
+    
     if(job.status === 'PAID'){
+      this.jobRepairForm = job;
       this.isPaid = true;
     }else{
       this.isPaid = false;
