@@ -43,6 +43,7 @@ export class UserComponent implements OnInit {
   pageSizeForStatus: number = 50;
   Math = Math;
   oneJob: any;
+  isPaid: boolean = false;
 
 
   saveFormData: JobSaveForm = {
@@ -89,7 +90,13 @@ export class UserComponent implements OnInit {
   }
 
   openJobRepairModal(job: any): void {
-    this.jobRepairForm = job;
+    if(job.status === 'PAID'){
+      this.isPaid = true;
+    }else{
+      this.isPaid = false;
+      this.jobRepairForm = job;
+    }
+    
   }
 
   openJobUpdateModal(job: any): void {
@@ -318,9 +325,7 @@ export class UserComponent implements OnInit {
 
 
   jobRepair(jobRepairForm: NgForm) {
-    console.log(jobRepairForm.value);
-    console.log(this.jobRepairForm);
-    if(this.jobRepairForm.status === 'PAID'){
+    if(this.isPaid){
       this.showFailedAlert('Payment have been made for this job')
     }else{
       if (jobRepairForm.valid) {

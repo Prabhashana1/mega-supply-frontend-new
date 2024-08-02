@@ -613,7 +613,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="repairStatus" class="form-label">Job Status</label>
-                        <select class="form-control" id="repairStatus" [value]="jobRepairForm.status" name="status">
+                        <select class="form-control" id="repairStatus" [(ngModel)]="jobRepairForm.status" name="status">
                             <option value="PENDING">PENDING</option>
                             <option value="IN_PROGRESS">IN_PROGRESS</option>
                             <option value="COMPLETED">COMPLETED</option>
