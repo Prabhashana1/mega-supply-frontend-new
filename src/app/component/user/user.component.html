@@ -204,7 +204,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="price" class="form-label">Price</label>
-                        <input type="number" class="form-control" id="price" [(ngModel)]="jobPayFormData.price"
+                        <input type="number" class="form-control" id="price" [disabled]="isPaid" [(ngModel)]="jobPayFormData.price"
                             name="price" required>
                     </div>
                     <div class="modal-footer">
@@ -357,12 +357,6 @@
 
 
 
-
-
-
-
-
-
 <div class="modal fade" id="addJobFromModal" tabindex="-1" aria-labelledby="addJobFormModalLable" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -469,7 +463,7 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-primary" [disabled]="jobeSaveForm.invalid"
-                            data-bs-dismiss="modal">Save
+                            data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#confirmationViewLinkModal">Save
                             Job</button>
                     </div>
                 </form>
@@ -477,6 +471,49 @@
         </div>
     </div>
 </div>
+
+
+
+<!-- Confirmation Modal -->
+<div class="modal fade" id="confirmationViewLinkModal" tabindex="-1" aria-labelledby="confirmationViewLinkModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmationViewLinkModalLabel">Confirmation</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Do you want to generate a QR code for the new job?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                <button type="button" class="btn btn-primary" (click)="confirmGenerateViewLinkQR()" data-bs-toggle="modal" data-bs-target="#QRViewLinkModal">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade" id="QRViewLinkModal" tabindex="-1" aria-labelledby="QRViewLinkModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmationViewLinkModalLabel">QR CODE</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="text-center" *ngIf="qrCodeUrl">
+                    <img [src]="qrCodeUrl" alt="QR Code">
+                  </div>                  
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 
 

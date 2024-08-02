@@ -46,6 +46,9 @@ export class UserComponent implements OnInit {
   Math = Math;
   oneJob: any;
   isPaid: boolean = false;
+  newJobId: number = 0;
+  viewLink: string = '';
+  qrCodeUrl: string = '';
 
 
   saveFormData: JobSaveForm = {
@@ -287,6 +290,7 @@ export class UserComponent implements OnInit {
         this.showSuccessAlert(response.message);
         this.getJobData();
         this.resetJobSaveForm(jobSaveForm);
+        this.newJobId = response.data.id;
 
       },
         (error => {
@@ -296,6 +300,26 @@ export class UserComponent implements OnInit {
       );
     }
   }
+
+
+
+  confirmGenerateViewLinkQR(): void{
+    if(this.newJobId > 0){
+      this.apiService.createViewLink(this.newJobId).subscribe((response: any) => {
+        this.showSuccessAlert(response.message);
+        this.viewLink = 'https://prabhashana1.github.io/mega-supply-frontend-new/#/viewLink/'+response.data.link;
+        this.qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(this.viewLink)}`;
+      },
+      (error => {
+        this.showFailedAlert(error);
+      })
+    );
+    }else{
+      this.showFailedAlert('Not new jobID selected');
+    }
+  }
+
+  
 
   resetJobSaveForm(jobSaveForm: NgForm): void {
     jobSaveForm.resetForm();

@@ -101,4 +101,8 @@ export class ApiService {
     return this.http.post(this.BASE_URL+'/auth/contact-us', contactUs, {headers: this.requstHeader});
   }
 
+  createViewLink(jobId: number): Observable<any>{
+    return this.http.get(this.BASE_URL+`/employee/create-view-link/${jobId}`);
+  }
+
 }
