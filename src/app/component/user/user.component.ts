@@ -290,6 +290,12 @@ export class UserComponent implements OnInit {
         this.showSuccessAlert(response.message);
         this.getJobData();
         this.resetJobSaveForm(jobSaveForm);
+        console.log(response.data.id);
+        console.log(response.data);
+        console.log(response);
+        
+        
+        
         this.newJobId = response.data.id;
 
       },
