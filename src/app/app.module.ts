@@ -21,6 +21,8 @@ import { ViewlinkComponent } from './component/viewlink/viewlink.component';
 import { ManageuserComponent } from './component/manageuser/manageuser.component';
 import { NumberToArrayPipe } from './number-to-array.pipe';
 import { PaymentComponent } from './component/payment/payment.component';
+import { ApiService } from './service/api.service';
+import { DatePipe } from '@angular/common';
 
 
 @NgModule({
@@ -48,7 +50,7 @@ import { PaymentComponent } from './component/payment/payment.component';
     RouterModule
 
   ],
-  providers: [AuthGuard,{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi:true}],
+  providers: [ApiService, DatePipe, AuthGuard,{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi:true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
