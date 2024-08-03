@@ -23,7 +23,7 @@ export class ViewlinkComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe(params => {
+    /*this.route.paramMap.subscribe(params => {
       this.token = params.get('token') || '';
       if(this.token){
         this.getTokenData();
@@ -32,7 +32,7 @@ export class ViewlinkComponent implements OnInit{
         
       }
 
-    });
+    });*/
   }
 
   getTokenData(): void{
@@ -48,7 +48,6 @@ export class ViewlinkComponent implements OnInit{
   showFailedAlert(responseMessage: string): void {
     this.showFailedResponse = true;
     this.message = responseMessage;
-    window.scrollTo({ top: 0, behavior: 'smooth' });
     setTimeout(() => {
       this.showFailedResponse = false;
     }, 5000);
