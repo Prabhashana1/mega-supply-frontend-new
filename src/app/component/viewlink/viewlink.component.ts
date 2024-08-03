@@ -6,7 +6,8 @@ import { ApiService } from 'src/app/service/api.service';
 @Component({
   selector: 'app-viewlink',
   templateUrl: './viewlink.component.html',
-  styleUrls: ['./viewlink.component.scss']
+  styleUrls: ['./viewlink.component.scss'],
+  providers: [DatePipe]
 })
 export class ViewlinkComponent implements OnInit{
 
