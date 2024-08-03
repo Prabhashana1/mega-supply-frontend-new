@@ -43,7 +43,7 @@ export class ViewlinkComponent implements OnInit{
       },error: (error) => {
         console.log(error);
         console.log(error.error.message);
-        this.showFailedAlert('Error fetching URL data: '+error.error.message); 
+        this.showFailedAlert(error.error.message); 
     }
     });
   }
