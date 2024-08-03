@@ -42,8 +42,8 @@ export class ViewlinkComponent implements OnInit{
         this.tokenData = response.data; 
       },error: (error) => {
         console.log(error);
-        console.log(error.message);
-        this.showFailedAlert('Error fetching URL data:'); 
+        console.log(error.error.message);
+        this.showFailedAlert('Error fetching URL data: '+error.error.message); 
     }
     });
   }
