@@ -23,6 +23,8 @@ export class ViewlinkComponent implements OnInit{
   }
 
   ngOnInit(): void {
+    console.log('came');
+    
     this.route.paramMap.subscribe(params => {
       this.token = params.get('token') || '';
       if(this.token){
