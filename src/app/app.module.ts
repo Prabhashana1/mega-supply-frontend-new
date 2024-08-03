@@ -38,7 +38,7 @@ import { PaymentComponent } from './component/payment/payment.component';
     ViewlinkComponent,
     ManageuserComponent,
     NumberToArrayPipe,
-    PaymentComponent
+    PaymentComponent,
   ],
   imports: [
     BrowserModule,

@@ -105,4 +105,8 @@ export class ApiService {
     return this.http.get(this.BASE_URL+`/employee/create-view-link/${jobId}`);
   }
 
+  viewCreatedLink(token: string): Observable<any>{
+    return this.http.get(this.BASE_URL+`/auth/view-generated-token/${token}`);
+  }
+
 }

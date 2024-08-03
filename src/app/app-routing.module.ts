@@ -18,7 +18,7 @@ const routes: Routes = [
   {path: 'contact', component: ContactComponent},
   {path: 'login', component:LoginComponent},
   {path: 'forbidden', component:ForbiddenComponent},
-  {path: 'viewlink', component:ViewlinkComponent},
+  {path: 'viewLink/:token', component:ViewlinkComponent},
   {path: 'admin', component:AdminComponent, canActivate:[AuthGuard], data:{role:'ADMIN'}},
   {path: 'manageuser', component:ManageuserComponent, canActivate:[AuthGuard], data:{role:'ADMIN'}},
   {path: 'user', component:UserComponent, canActivate:[AuthGuard], data:{role:'EMPLOYEE', role2:'ADMIN'}},
