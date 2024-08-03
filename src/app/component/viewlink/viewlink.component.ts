@@ -37,14 +37,12 @@ export class ViewlinkComponent implements OnInit{
   }
 
   getTokenData(): void{
-    this.apiService.viewCreatedLink(this.token).subscribe((response: any ) => {
-      this.tokenData = response.data; 
-      console.log(response);
-      console.log(response.data);
-      
-      
-    },(error) => {
-      this.showFailedAlert('Error fetching URL data: '+error.message);
+    this.apiService.viewCreatedLink(this.token).subscribe({
+      next: (response) => {
+        this.tokenData = response.data; 
+      },error: (error) => {
+        this.showFailedAlert('Error fetching URL data: '+error.message); 
+    }
     });
   }
 
