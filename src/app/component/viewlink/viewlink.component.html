@@ -8,25 +8,30 @@
 
 
     <div class="row my-2">
-        <div class="card shadow-lg  my-5 rounded">
+        <div class="card shadow-lg  my-5 mx-2 rounded">
             <div class="card-header text-center">
-              <h1>Job Tracking</h1>
+              <h1>Your Job Progress</h1>
             </div>
             <div class="card-body">
-              <h3 class="card-title text-center">Your Job Progress</h3>
               <h5 class="card-text text-center">Job ID : {{tokenData.jobId}} </h5>
-              <p class="card-text text-center">Remaining View : {{tokenData.remainingViews}} </p><br>
+              <p class="card-text text-center" style="color: red;">Remaining View : {{tokenData.remainingViews}} </p><br>
               <p class="card-text">Job ID : {{tokenData.jobId}} </p>
-              <p class="card-text">Customer Name : {{tokenData.customerName}} </p>
+              <p class="card-text"><b>Customer Name : {{tokenData.customerName}} </b></p>
               <p class="card-text">Fault : {{tokenData.fault}} </p>
               <p class="card-text">IMEI : {{tokenData.imei}} </p>
               <p class="card-text">Phone Model : {{tokenData.phoneModel}} </p>
               <p class="card-text">Phone Number : {{tokenData.phoneNumber}} </p>
               <p class="card-text">Received Date : {{ getFormattedDate(tokenData.receivedDate)}} </p>
-              <h5 class="card-text">Status : {{tokenData.status}} </h5>
+              <h5 class="card-text text-info" *ngIf="tokenData.status === 'PENDING'">Status : {{tokenData.status}} </h5>
+              <h5 class="card-text text-primary" *ngIf="tokenData.status === 'IN_PROGRESS'">Status : {{tokenData.status}} </h5>
+              <h5 class="card-text text-success" *ngIf="tokenData.status === 'COMPLETED'">Status : {{tokenData.status}} </h5>
+              <h5 class="card-text text-danger" *ngIf="tokenData.status === 'CAN\'T FIX'">Status : {{tokenData.status}} </h5>
+              <h5 class="card-text text-warning" *ngIf="tokenData.status === 'WAITING FOR PART'">Status : {{tokenData.status}} </h5>
+              <h5 class="card-text text-success" *ngIf="tokenData.status === 'PAID'">Status : {{tokenData.status}} </h5>
             </div>
-            <div class="card-footer text-muted">
-              Thank you for choosing us
+            <div class="card-footer text-muted text-center">
+              Thank you for choosing us<br>
+              Any details contact us
             </div>
           </div>
     </div>
