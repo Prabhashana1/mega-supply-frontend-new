@@ -55,7 +55,7 @@ export class ViewlinkComponent implements OnInit{
     this.message = responseMessage;
     setTimeout(() => {
       this.showFailedResponse = false;
-    }, 5000);
+    }, 10000);
   }
 
 

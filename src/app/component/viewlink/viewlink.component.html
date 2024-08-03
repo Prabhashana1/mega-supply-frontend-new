@@ -1,39 +1,72 @@
 <div class="container-fluid">
 
-  <div class="alert alert-danger alert-dismissible fade show text-center mt-3" role="alert"
-        *ngIf="showFailedResponse">
-        {{message}}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
+  <div class="alert alert-danger alert-dismissible fade show text-center mt-3" role="alert" *ngIf="showFailedResponse">
+    {{message}}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
 
 
-    <div class="row justify-content-center mx-2 my-2" *ngIf="tokenData">
-        <div class="card shadow-lg  my-5 mx-2 rounded">
-            <div class="card-header text-center">
-              <h1>Your Job Progress</h1>
-            </div>
-            <div class="card-body">
-              <h5 class="card-text text-center">Job ID : {{tokenData.jobId}} </h5>
-              <p class="card-text text-center" style="color: red;">Remaining View : {{tokenData.remainingViews}} </p><br>
-              <p class="card-text">Job ID : {{tokenData.jobId}} </p>
-              <p class="card-text"><b>Customer Name : {{tokenData.customerName}} </b></p>
-              <p class="card-text">Fault : {{tokenData.fault}} </p>
-              <p class="card-text">IMEI : {{tokenData.imei}} </p>
-              <p class="card-text">Phone Model : {{tokenData.phoneModel}} </p>
-              <p class="card-text">Phone Number : {{tokenData.phoneNumber}} </p>
-              <p class="card-text">Received Date : {{ getFormattedDate(tokenData.receivedDate)}} </p>
-              <h5 class="card-text" *ngIf="tokenData.status === 'PENDING'">Status : <span class="text-info">{{tokenData.status}}</span></h5>
-              <h5 class="card-text" *ngIf="tokenData.status === 'IN_PROGRESS'">Status : <span class="text-primary">{{tokenData.status}}</span></h5>
-              <h5 class="card-text" *ngIf="tokenData.status === 'COMPLETED'">Status : <span class="text-success">{{tokenData.status}}</span></h5>
-              <h5 class="card-text" *ngIf="tokenData.status === 'CAN\'T_FIX'">Status : <span class="text-danger">{{tokenData.status}}</span></h5>
-              <h5 class="card-text" *ngIf="tokenData.status === 'WAITING FOR PART'">Status : <span class="text-warning">{{tokenData.status}}</span></h5>
-              <h5 class="card-text" *ngIf="tokenData.status === 'PAID'">Status : <span class="text-success">{{tokenData.status}}</span></h5>
-            </div>
-            <div class="card-footer text-muted text-center">
-              Thank you for choosing us<br>
-              Any details contact us
-            </div>
-          </div>
+  <div class="row justify-content-center mx-2 my-2" *ngIf="tokenData">
+    <div class="card shadow-lg  my-5 mx-2 rounded">
+      <div class="card-header text-center">
+        <h1>Your Job Progress</h1>
+      </div>
+      <div class="card-body">
+        <h5 class="card-text text-center">Job ID : {{tokenData.jobId}} </h5>
+        <p class="card-text text-center" style="color: red;">Remaining View : {{tokenData.remainingViews}} </p><br>
+        <p class="card-text">Job ID : {{tokenData.jobId}} </p>
+        <p class="card-text"><b>Customer Name : {{tokenData.customerName}} </b></p>
+        <p class="card-text">Fault : {{tokenData.fault}} </p>
+        <p class="card-text">IMEI : {{tokenData.imei}} </p>
+        <p class="card-text">Phone Model : {{tokenData.phoneModel}} </p>
+        <p class="card-text">Phone Number : {{tokenData.phoneNumber}} </p>
+        <p class="card-text">Received Date : {{ getFormattedDate(tokenData.receivedDate)}} </p>
+        <h5 class="card-text" *ngIf="tokenData.status === 'PENDING'">Status : <span
+            class="text-info">{{tokenData.status}}</span></h5>
+        <h5 class="card-text" *ngIf="tokenData.status === 'IN_PROGRESS'">Status : <span
+            class="text-primary">{{tokenData.status}}</span></h5>
+        <h5 class="card-text" *ngIf="tokenData.status === 'COMPLETED'">Status : <span
+            class="text-success">{{tokenData.status}}</span></h5>
+        <h5 class="card-text" *ngIf="tokenData.status === 'CAN\'T_FIX'">Status : <span
+            class="text-danger">{{tokenData.status}}</span></h5>
+        <h5 class="card-text" *ngIf="tokenData.status === 'WAITING FOR PART'">Status : <span
+            class="text-warning">{{tokenData.status}}</span></h5>
+        <h5 class="card-text" *ngIf="tokenData.status === 'PAID'">Status : <span
+            class="text-success">{{tokenData.status}}</span></h5>
+      </div>
+      <div class="card-footer text-muted text-center">
+        Thank you for choosing us<br>
+        Any details contact us
+      </div>
     </div>
-    
+  </div>
+
+
+
+
+  <div class="row justify-content-center mx-2 my-2" *ngIf="!tokenData">
+    <div class="card shadow-lg  my-5 mx-2 rounded">
+      <div class="card-header text-center">
+        <h1>Your Job Progress</h1>
+      </div>
+      <div class="card-body">
+        <h5 class="card-text text-center">Job ID : - </h5>
+        <p class="card-text text-center" style="color: red;">Remaining View : - </p><br>
+        <p class="card-text">Job ID : - </p>
+        <p class="card-text"><b>Customer Name : - </b></p>
+        <p class="card-text">Fault : - </p>
+        <p class="card-text">IMEI : - </p>
+        <p class="card-text">Phone Model : - </p>
+        <p class="card-text">Phone Number : - </p>
+        <p class="card-text">Received Date : - </p>
+        <h5 class="card-text">Status : <span
+            class="text-info">-</span></h5>
+      </div>
+      <div class="card-footer text-muted text-center">
+        Thank you for choosing us<br>
+        Any details contact us
+      </div>
+    </div>
+  </div>
+
 </div>
