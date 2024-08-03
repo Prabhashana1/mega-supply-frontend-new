@@ -24,8 +24,6 @@ export class ViewlinkComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    console.log('came');
-    
     this.route.paramMap.subscribe(params => {
       this.token = params.get('token') || '';
       if(this.token){
@@ -46,7 +44,7 @@ export class ViewlinkComponent implements OnInit{
       
       
     },(error) => {
-      this.showFailedAlert('Error fetching URL data: '+error);
+      this.showFailedAlert('Error fetching URL data: '+error.message);
     });
   }
 
