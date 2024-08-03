@@ -1,16 +1,32 @@
 <div class="container-fluid">
-    <div class="row align-items-center">
-        <div class="card text-center shadow-lg mb-5 rounded">
-            <div class="card-header">
-              Job Status Tracking
+
+  <div class="alert alert-danger alert-dismissible fade show text-center mt-3" role="alert"
+        *ngIf="showFailedResponse">
+        {{message}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+
+    <div class="row">
+        <div class="card shadow-lg  mx-5 rounded">
+            <div class="card-header text-center">
+              <h1>Job Tracking</h1>
             </div>
             <div class="card-body">
-              <h5 class="card-title">Special title treatment</h5>
-              <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-              <a href="#" class="btn btn-primary">Go somewhere</a>
+              <h3 class="card-title text-center">Your Job Progress</h3>
+              <h5 class="card-text text-center">Job ID : {{tokenData.jobId}} </h5>
+              <p class="card-text text-center">[Remaining View : {{tokenData.remainingViews}}] </p><br>
+              <p class="card-text">Job ID : {{tokenData.jobId}} </p>
+              <p class="card-text">Customer Name : {{tokenData.customerName}} </p>
+              <p class="card-text">Fault : {{tokenData.fault}} </p>
+              <p class="card-text">IMEI : {{tokenData.imei}} </p>
+              <p class="card-text">Phone Model : {{tokenData.phoneModel}} </p>
+              <p class="card-text">Phone Number : {{tokenData.phoneNumber}} </p>
+              <p class="card-text">Received Date : {{ getFormattedDate(tokenData.receivedDate)}} </p>
+              <h5 class="card-text">Status : {{tokenData.status}} </h5>
             </div>
             <div class="card-footer text-muted">
-              2 days ago
+              Thank you for choosing us
             </div>
           </div>
     </div>

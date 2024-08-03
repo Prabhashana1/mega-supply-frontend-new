@@ -106,7 +106,7 @@ export class ApiService {
   }
 
   viewCreatedLink(token: string): Observable<any>{
-    return this.http.get(this.BASE_URL+`/auth/view-generated-token/${token}`);
+    return this.http.get(this.BASE_URL+`/auth/view-generated-token/${token}`, {headers: this.requstHeader});
   }
 
 }

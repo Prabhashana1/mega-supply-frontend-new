@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ApiService } from 'src/app/service/api.service';
@@ -11,10 +12,15 @@ export class ViewlinkComponent implements OnInit{
 
   token: string = '';
   tokenData: any;
+  showFailedResponse: boolean = false;
+  message: string = '';
 
-  constructor(private route: ActivatedRoute, private apiService: ApiService){}
+  constructor(private route: ActivatedRoute, private apiService: ApiService, private datePipe: DatePipe){}
 
 
+  getFormattedDate(dateString: string): string {
+    return this.datePipe.transform(dateString, 'yyyy-MM-dd hh:mm:ss a') || '';
+  }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
@@ -22,7 +28,7 @@ export class ViewlinkComponent implements OnInit{
       if(this.token){
         this.getTokenData();
       }else{
-        console.log('Not token');
+        this.showFailedAlert('Not token found in this URL');
         
       }
 
@@ -31,13 +37,22 @@ export class ViewlinkComponent implements OnInit{
 
   getTokenData(): void{
     this.apiService.viewCreatedLink(this.token).subscribe((response: any ) => {
-      console.log('Token Data:', response);
-      this.tokenData = response; 
+      this.tokenData = response.data; 
     },(error) => {
-      console.error('Error fetching token data:', error);
+      this.showFailedAlert('Error fetching URL data: '+error);
     });
   }
 
+
+
+  showFailedAlert(responseMessage: string): void {
+    this.showFailedResponse = true;
+    this.message = responseMessage;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    setTimeout(() => {
+      this.showFailedResponse = false;
+    }, 5000);
+  }
 
 
 
