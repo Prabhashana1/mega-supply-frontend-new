@@ -41,11 +41,10 @@ export class ViewlinkComponent implements OnInit{
       next: (response) => {
         this.tokenData = response.data; 
       },error: (error) => {
-        console.log(error);
-        if(error.error.message === null){
-          this.showFailedAlert('Server unavailable, Please try again later......');
-        }else{
-          this.showFailedAlert(error.error.message); 
+        if (error.status === 0 || error.status === 503) {
+          this.showFailedAlert('Server is currently unavailable. Please try again later...');
+        } else {
+          this.showFailedAlert(error.error.message);
         }
         
     }
