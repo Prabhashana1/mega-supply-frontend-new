@@ -11,6 +11,7 @@ import { AuthGuard } from './auth/auth.guard';
 import { ViewlinkComponent } from './component/viewlink/viewlink.component';
 import { ManageuserComponent } from './component/manageuser/manageuser.component';
 import { PaymentComponent } from './component/payment/payment.component';
+import { SalesComponent } from './component/sales/sales.component';
 
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
@@ -20,6 +21,8 @@ const routes: Routes = [
   {path: 'forbidden', component:ForbiddenComponent},
   {path: 'viewLink/:token', component:ViewlinkComponent},
   {path: 'admin', component:AdminComponent, canActivate:[AuthGuard], data:{role:'ADMIN'}},
+  {path: 'sales', component:SalesComponent, canActivate:[AuthGuard], data:{role:'ADMIN'}},
+  {path: 'sales', component:SalesComponent, canActivate:[AuthGuard], data:{role:'ADMIN'}},
   {path: 'manageuser', component:ManageuserComponent, canActivate:[AuthGuard], data:{role:'ADMIN'}},
   {path: 'user', component:UserComponent, canActivate:[AuthGuard], data:{role:'EMPLOYEE', role2:'ADMIN'}},
   {path: 'invoice', component:PaymentComponent, canActivate:[AuthGuard], data:{role:'EMPLOYEE', role2:'ADMIN'}},

@@ -21,6 +21,7 @@ import { ViewlinkComponent } from './component/viewlink/viewlink.component';
 import { ManageuserComponent } from './component/manageuser/manageuser.component';
 import { NumberToArrayPipe } from './number-to-array.pipe';
 import { PaymentComponent } from './component/payment/payment.component';
+import { SalesComponent } from './component/sales/sales.component';
 
 
 
@@ -40,6 +41,7 @@ import { PaymentComponent } from './component/payment/payment.component';
     ManageuserComponent,
     NumberToArrayPipe,
     PaymentComponent,
+    SalesComponent
   ],
   imports: [
     BrowserModule,

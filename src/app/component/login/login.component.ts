@@ -44,7 +44,7 @@ export class LoginComponent implements OnInit {
 
     },
     (error =>{
-      if (error.status === 0 || error.status === 503) {
+      if (error.status === 0) {
         this.showFailedAlert('Server is currently unavailable. Please try again later...');
       } else {
         this.showFailedAlert(error.error.message);
