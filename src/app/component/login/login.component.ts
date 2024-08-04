@@ -44,7 +44,11 @@ export class LoginComponent implements OnInit {
 
     },
     (error =>{
-      this.showFailedAlert(error.error.message);
+      if(error.error.message === null){
+        this.showFailedAlert('Server unavailable, Please try again later......');
+      }else{
+        this.showFailedAlert(error.error.message);
+      }
       
     })
     );
