@@ -13,12 +13,12 @@ export class SalesComponent implements OnInit{
   public config: any = {
     type: 'bar',
     data: {
-      labels: ['JAN', 'FEB'],
+      labels: ['JAN', 'FEB', 'MARCH', 'APR', 'MAY', 'JUNE', 'JULLY', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
       datasets: [
         {
           lable:'Sales',
-          data: ['456', '576'],
-          backgroundColor: 'blue',
+          data: ['456', '576', '335', '200', '100', '300', '400', '350', '300', '450', '320', '678'],
+          backgroundColor: '#0090c2',
         },
       ],
 
@@ -31,6 +31,7 @@ export class SalesComponent implements OnInit{
 
   ngOnInit(): void {
     this.chart = new Chart('MyChart', this.config);
+    this.chart = new Chart('MyChart2', this.config);
   }
 
 }
