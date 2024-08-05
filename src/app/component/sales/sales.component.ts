@@ -167,6 +167,7 @@ export class SalesComponent implements OnInit {
   }
 
   onMonthChange(event: any): void {
+    this.selectedYear = event.target.value;
     this.selectedMonth = event.target.value;
     this.loadMonthlySales(this.selectedYear, this.selectedMonth);
   }
