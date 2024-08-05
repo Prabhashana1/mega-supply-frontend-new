@@ -18,8 +18,9 @@ export class SalesComponent implements OnInit {
   yearTotalSalse: number = 0;
   year: number = 0;
   monthTotalSales: number = 0;
-  selectedYear: number = 2024;
-  selectedMonth: number = 1;
+  selectedYear1: number = 2024;
+  selectedYear2: number = 2024;
+  selectedMonth2: number = 1;
   month: string = '';
   year2: number = 0;
 
@@ -46,10 +47,13 @@ export class SalesComponent implements OnInit {
 
   ngOnInit(): void {
     const currentDate = new Date();
-    this.selectedYear = currentDate.getFullYear();
-    this.selectedMonth = currentDate.getMonth() + 1;
-    this.loadYearlySales(this.selectedYear);
-    this.loadMonthlySales(this.selectedYear, this.selectedMonth);
+    this.selectedYear1 = currentDate.getFullYear();
+    this.selectedYear2 = currentDate.getFullYear();
+    this.selectedMonth2 = currentDate.getMonth() + 1;
+    console.log(this.selectedYear1, this.selectedMonth2, this.selectedYear2);
+    
+    this.loadYearlySales(this.selectedYear1);
+    this.loadMonthlySales(this.selectedYear2, this.selectedMonth2);
   }
 
 
@@ -165,14 +169,14 @@ export class SalesComponent implements OnInit {
   }
 
   onYearChange(event: any): void {
-    this.selectedYear = event.target.value;
-    this.loadYearlySales(this.selectedYear);
+    this.selectedYear1 = event.target.value;
+    this.loadYearlySales(this.selectedYear1);
   }
 
   onMonthChange(event: any): void {
-    this.selectedYear = event.target.value;
-    this.selectedMonth = event.target.value;
-    this.loadMonthlySales(this.selectedYear, this.selectedMonth);
+    this.selectedYear2 = event.target.value;
+    this.selectedMonth2 = event.target.value;
+    this.loadMonthlySales(this.selectedYear2, this.selectedMonth2);
   }
 
   showFailedAlert(responseMessage: string): void {
