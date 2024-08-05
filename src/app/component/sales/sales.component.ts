@@ -31,7 +31,7 @@ export class SalesComponent implements OnInit{
           datasets: [
             {
               lable:'Sales',
-              data: salesData,
+              data: [salesData],
               backgroundColor: '#0090c2',
             },
           ],
