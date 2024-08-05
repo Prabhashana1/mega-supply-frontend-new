@@ -6,7 +6,64 @@
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 
-    <div class="card shadow-lg p-1 mb-5 bg-white rounded justify-content-center">
+
+    <div class="card shadow-lg mb-5 bg-white rounded justify-content-center">
+        <div class="card-header text-center">
+            <h3>Total Sales For {{year}}</h3>
+            <h5>Total Sales Amount For Year LKR: {{yearTotalSalse}}</h5>
+            <div class="row">
+                <div class="col-md-4 offset-md-4">
+                    <select class="form-select" (change)="onYearChange($event)">
+                        <option *ngFor="let year of years" [value]="year">{{year}}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col">
+                    <canvas id="MyChart">{{chart}}</canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <div class="card shadow-lg my-5 bg-white rounded justify-content-center">
+        <div class="card-header text-center">
+            <h3>Total Sales For {{year2}} {{month}}</h3>
+            <h5>Total Sales Amount For Month LKR: {{monthTotalSales}}</h5>
+            <div class="row">
+                <div class="col-md-4 offset-md-4">
+                    <select class="form-select" (change)="onMonthChange($event)">
+                        <option *ngFor="let month of months" [value]="month.value">{{month.name}}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col">
+                    <canvas id="MyChart2">{{chart}}</canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+<!--
+
+    <div class="card shadow-lg mb-5 bg-white rounded justify-content-center">
         <div class="card-header text-center">
             <h3>Total Sales For {{year}}</h3>
             <h5>Total Sales Amount For Year LKR: {{yearTotalSalse}}</h5>
@@ -20,7 +77,7 @@
         </div>
     </div>
 
-    <div class="card shadow-lg p-1 my-5 bg-white rounded justify-content-center">
+    <div class="card shadow-lg my-5 bg-white rounded justify-content-center">
         <div class="card-header text-center">
             <h3>Total Sales For {{year2}} {{month}}</h3>
             <h5>Total Sales Amount For Month LKR: {{monthTotalSales}}</h5>
@@ -35,7 +92,7 @@
     </div>
 
 </div>
-
+-->
 
 
 
