@@ -58,10 +58,14 @@ export class SalesComponent implements OnInit {
     });
 
 
+    console.log(this.generateLabelsForMonth());
+    
     this.apiService.getDailySalesByMonth(this.year2, 12) // Change 12 to the required month number
       .subscribe({
         next: (response) => {
           const dailySalesData = this.mapApiDataToChartData(response.data.dailySales);
+          console.log(dailySalesData);
+          
           this.monthTotalSales = response.data.totalMonthlySales;
           this.year2 = response.data.year;
           this.month = response.data.month;
@@ -97,7 +101,7 @@ export class SalesComponent implements OnInit {
             },
           };
 
-          this.chart = new Chart('MyChart', this.config);
+          this.chart = new Chart('MyChart2', this.config);
         }, 
         error: (error) => {
           if (error.status === 0) {
