@@ -60,7 +60,7 @@ export class SalesComponent implements OnInit {
 
     console.log(this.generateLabelsForMonth());
     
-    this.apiService.getDailySalesByMonth(this.year2, 12) // Change 12 to the required month number
+    this.apiService.getDailySalesByMonth(this.year2, 8) // Change 12 to the required month number
       .subscribe({
         next: (response) => {
           const dailySalesData = this.mapApiDataToChartData(response.data.dailySales);
