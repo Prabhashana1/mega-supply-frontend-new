@@ -113,4 +113,8 @@ export class ApiService {
     return this.http.get(this.BASE_URL+`/admin/get-sales-by-year/${year}`);
   }
 
+  getDailySalesByMonth(year: number, month: number): Observable<any>{
+    return this.http.get(this.BASE_URL+`/admin/jobs/daily-sales?year=${year}&month=${month}`);
+  }
+
 }

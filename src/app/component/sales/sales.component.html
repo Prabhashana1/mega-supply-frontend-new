@@ -1,4 +1,4 @@
-<div class="container mt-5 justify-content-center">
+<div class="container mt-5">
 
     <div class="alert alert-danger alert-dismissible fade show text-center mt-3" role="alert"
         *ngIf="showFailedResponse">
@@ -6,7 +6,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 
-    <div class="card shadow-lg p-3 mb-1 bg-white rounded" style="max-width: 600px;">
+    <div class="card shadow-lg p-1 mb-5 bg-white rounded justify-content-center" style="max-width: 600px;">
         <div class="card-header text-center">
             <h3>Total Sales For {{year}}</h3>
             <h5>Total Sales Amount For Year LKR: {{yearTotalSalse}}</h5>
@@ -15,6 +15,20 @@
             <div class="row">
                 <div class="col">
                     <canvas id="MyChart">{{chart}}</canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card shadow-lg p-1 my-5 bg-white rounded justify-content-center">
+        <div class="card-header text-center">
+            <h3>Total Sales For {{year2}} {{month}}</h3>
+            <h5>Total Sales Amount For Month LKR: {{yearTotalSalse}}</h5>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col">
+                    <canvas id="MyChart2">{{chart}}</canvas>
                 </div>
             </div>
         </div>

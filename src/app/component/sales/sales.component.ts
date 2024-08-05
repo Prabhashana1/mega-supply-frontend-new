@@ -17,13 +17,16 @@ export class SalesComponent implements OnInit {
   message: string = '';
   yearTotalSalse: number = 0;
   year: number = 0;
+  monthTotalSales: number = 0;
+  year2: number = 2024;
+  month: string = 'DECEMBER';
 
   constructor(private apiService: ApiService) { }
 
   ngOnInit(): void {
     this.apiService.getSalesByYear('2024').subscribe({
       next: (response) => {
-        const salesData = this.mapApiDataToChartData(response.data.monthlySales);
+        const salesData = this.mapApiDataToChartData1(response.data.monthlySales);
         this.yearTotalSalse = response.data.totalYearlySales;
         this.year = response.data.year;
         this.config = {
@@ -53,6 +56,61 @@ export class SalesComponent implements OnInit {
 
       }
     });
+
+
+    this.apiService.getDailySalesByMonth(this.year2, 12) // Change 12 to the required month number
+      .subscribe({
+        next: (response) => {
+          const dailySalesData = this.mapApiDataToChartData(response.data.dailySales);
+          this.monthTotalSales = response.data.totalMonthlySales;
+          this.year2 = response.data.year;
+          this.month = response.data.month;
+          this.config = {
+            type: 'bar',
+            data: {
+              labels: this.generateLabelsForMonth(),
+              datasets: [
+                {
+                  label: `Sales for ${this.month} ${this.year2}`,
+                  data: dailySalesData,
+                  backgroundColor: '#0090c2',
+                },
+              ],
+            },
+            options: {
+              aspectRatio: 1,
+              scales: {
+                x: {
+                  title: {
+                    display: true,
+                    text: 'Days'
+                  }
+                },
+                y: {
+                  title: {
+                    display: true,
+                    text: 'Sales'
+                  },
+                  beginAtZero: true
+                }
+              }
+            },
+          };
+
+          this.chart = new Chart('MyChart', this.config);
+        }, 
+        error: (error) => {
+          if (error.status === 0) {
+            this.showFailedAlert('Server is currently unavailable. Please try again later...');
+          } else {
+            this.showFailedAlert(error.error.message);
+          }
+        }
+      });
+
+
+
+
   }
 
   showFailedAlert(responseMessage: string): void {
@@ -64,9 +122,18 @@ export class SalesComponent implements OnInit {
   }
 
 
-  private mapApiDataToChartData(monthlySales: any): number[] {
+  private mapApiDataToChartData1(monthlySales: any): number[] {
     const months = ['JANUARY', 'FEBRUARY', 'MARCH', 'APRIL', 'MAY', 'JUNE', 'JULY', 'AUGUST', 'SEPTEMBER', 'OCTOBER', 'NOVEMBER', 'DECEMBER'];
     return months.map(month => monthlySales[month] || 0);
+  }
+
+  private mapApiDataToChartData(dailySales: any): number[] {
+    return dailySales.map((day: any) => day.totalSales || 0);
+  }
+
+  private generateLabelsForMonth(): string[] {
+    const daysInMonth = new Date(this.year, 12, 0).getDate(); // Change 12 to the required month number
+    return Array.from({ length: daysInMonth }, (_, i) => (i + 1).toString());
   }
 
 }
