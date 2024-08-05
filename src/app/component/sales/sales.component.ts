@@ -45,6 +45,9 @@ export class SalesComponent implements OnInit {
   constructor(private apiService: ApiService) { }
 
   ngOnInit(): void {
+    const currentDate = new Date();
+    this.selectedYear = currentDate.getFullYear();
+    this.selectedMonth = currentDate.getMonth() + 1;
     this.loadYearlySales(this.selectedYear);
     this.loadMonthlySales(this.selectedYear, this.selectedMonth);
   }
