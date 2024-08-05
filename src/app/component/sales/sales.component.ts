@@ -20,6 +20,10 @@ export class SalesComponent implements OnInit{
   ngOnInit(): void {
     this.apiService.getSalesByYear('2024').subscribe(response =>{
     const salesData = this.mapApiDataToChartData(response.data.monthlySales);
+    console.log(response.data.monthlySales);
+    console.log(response.data.totalYearlySales);
+    console.log(salesData);
+    
       this.config = {
         type: 'bar',
         data: {
