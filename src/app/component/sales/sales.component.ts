@@ -16,7 +16,7 @@ export class SalesComponent implements OnInit {
   showFailedResponse: boolean = false;
   message: string = '';
   yearTotalSalse: number = 0;
-  year: number = 2024;
+  year: number = 0;
   monthTotalSales: number = 0;
   selectedYear: number = 2024;
   selectedMonth: number = 1;
@@ -25,7 +25,7 @@ export class SalesComponent implements OnInit {
 
 
 
-  years: number[] = [2021, 2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030]; // Adjust this as needed
+  years: number[] = [2024, 2025, 2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033, 2034, 2035]; // Adjust this as needed
   months: { value: number, name: string }[] = [
     { value: 1, name: 'JANUARY' },
     { value: 2, name: 'FEBRUARY' },
