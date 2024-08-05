@@ -1,11 +1,16 @@
 <div class="container mt-5 justify-content-center">
 
-    <div class="alert alert-danger alert-dismissible fade show text-center mt-3" role="alert" *ngIf="showFailedResponse">
+    <div class="alert alert-danger alert-dismissible fade show text-center mt-3" role="alert"
+        *ngIf="showFailedResponse">
         {{message}}
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-      </div>
-      
+    </div>
+
     <div class="card shadow-lg p-3 mb-1 bg-white rounded" style="max-width: 600px;">
+        <div class="card-header text-center">
+            <h1>Total Sales For {{year}}</h1>
+            <h3>Total Sales Amount For Year: {{yearTotalSalse}}</h3>
+        </div>
         <div class="card-body">
             <div class="row">
                 <div class="col">

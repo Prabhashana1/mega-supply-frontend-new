@@ -15,19 +15,23 @@ export class SalesComponent implements OnInit {
   public chart: any;
   showFailedResponse: boolean = false;
   message: string = '';
+  yearTotalSalse:number = 0;
+  year:number = 0;
 
   constructor(private apiService: ApiService) { }
 
   ngOnInit(): void {
     this.apiService.getSalesByYear('2024').subscribe(response => {
       const salesData = this.mapApiDataToChartData(response.data.monthlySales);
+      this.yearTotalSalse = response.data.totalYearlySales;
+      this.year = response.data.year;
       this.config = {
         type: 'bar',
         data: {
           labels: ['JAN', 'FEB', 'MARCH', 'APR', 'MAY', 'JUNE', 'JULY', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
           datasets: [
             {
-              label: 'Sales',
+              label: 'Sales for '+this.year,
               data: salesData,
               backgroundColor: '#0090c2',
             },
