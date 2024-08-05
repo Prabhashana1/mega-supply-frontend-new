@@ -109,4 +109,8 @@ export class ApiService {
     return this.http.get(this.BASE_URL+`/auth/view-generated-token/${token}`, {headers: this.requstHeader});
   }
 
+  getSalesByYear(year: string): Observable<any>{
+    return this.http.get(this.BASE_URL+`/admin/get-sales-by-year/${year}`);
+  }
+
 }

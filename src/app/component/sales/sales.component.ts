@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Chart , registerables} from 'chart.js';
+import { ApiService } from 'src/app/service/api.service';
 
 Chart.register(...registerables);
 
@@ -10,28 +11,40 @@ Chart.register(...registerables);
 })
 export class SalesComponent implements OnInit{
 
-  public config: any = {
-    type: 'bar',
-    data: {
-      labels: ['JAN', 'FEB', 'MARCH', 'APR', 'MAY', 'JUNE', 'JULLY', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
-      datasets: [
-        {
-          lable:'Sales',
-          data: ['456', '576', '335', '200', '100', '300', '400', '350', '300', '450', '320', '678'],
-          backgroundColor: '#0090c2',
-        },
-      ],
+  public config: any;
+  public chart: any;
 
-    },
-    options:{
-      aspectRatio: 1,
-    },
-  };
-  chart: any;
+
+  constructor(private apiService: ApiService){}
 
   ngOnInit(): void {
-    this.chart = new Chart('MyChart', this.config);
-    this.chart = new Chart('MyChart2', this.config);
+    this.apiService.getSalesByYear('2024').subscribe(response =>{
+    const salesData = this.mapApiDataToChartData(response.data.monthlySales);
+      this.config = {
+        type: 'bar',
+        data: {
+          labels: ['JAN', 'FEB', 'MARCH', 'APR', 'MAY', 'JUNE', 'JULLY', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
+          datasets: [
+            {
+              lable:'Sales',
+              data: salesData,
+              backgroundColor: '#0090c2',
+            },
+          ],
+    
+        },
+        options:{
+          aspectRatio: 1,
+        },
+      };
+      this.chart = new Chart('Mychart', this.config);
+      }
+    );
+  }
+
+  private mapApiDataToChartData(monthlySales: any): number[] {
+    const months = ['JANUARY', 'FEBRUARY', 'MARCH', 'APRIL', 'MAY', 'JUNE', 'JULY', 'AUGUST', 'SEPTEMBER', 'OCTOBER', 'NOVEMBER', 'DECEMBER'];
+    return months.map(month => monthlySales[month] || 0);
   }
 
 }
