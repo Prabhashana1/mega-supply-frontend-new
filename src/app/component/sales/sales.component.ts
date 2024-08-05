@@ -16,7 +16,7 @@ export class SalesComponent implements OnInit {
   showFailedResponse: boolean = false;
   message: string = '';
   yearTotalSalse: number = 0;
-  year: number = 0;
+  year1: number = 0;
   monthTotalSales: number = 0;
   selectedYear1: number = 2024;
   selectedYear2: number = 2024;
@@ -66,14 +66,14 @@ export class SalesComponent implements OnInit {
       next: (response) => {
         const salesData = this.mapApiDataToChartData1(response.data.monthlySales);
         this.yearTotalSalse = response.data.totalYearlySales;
-        this.year = response.data.year;
+        this.year1 = response.data.year;
         this.config = {
           type: 'bar',
           data: {
             labels: ['JAN', 'FEB', 'MARCH', 'APR', 'MAY', 'JUNE', 'JULY', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
             datasets: [
               {
-                label: 'Sales for ' + this.year,
+                label: 'Sales for ' + this.year1,
                 data: salesData,
                 backgroundColor: '#0090c2',
               },
