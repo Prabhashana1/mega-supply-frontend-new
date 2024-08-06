@@ -28,7 +28,7 @@ export class SalesComponent implements OnInit {
 
 
 
-  years: number[] = [2024, 2025, 2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033, 2034, 2035]; // Adjust this as needed
+  years: number[] = [2024, 2025, 2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033, 2034, 2035];
   months: { value: number, name: string }[] = [
     { value: 1, name: 'JANUARY' },
     { value: 2, name: 'FEBRUARY' },
@@ -52,8 +52,6 @@ export class SalesComponent implements OnInit {
     this.selectedYear1 = currentDate.getFullYear();
     this.selectedYear2 = currentDate.getFullYear();
     this.selectedMonth2 = currentDate.getMonth() + 1;
-    console.log(this.selectedYear1, this.selectedMonth2, this.selectedYear2);
-    
     this.loadYearlySales(this.selectedYear1);
     this.loadMonthlySales(this.selectedYear2, this.selectedMonth2);
   }
@@ -101,9 +99,10 @@ export class SalesComponent implements OnInit {
           },
         };
 
+        /*
         if (this.chart) {
           this.chart.destroy();
-        }
+        }*/
         this.chart = new Chart('MyChart', this.config);
       },
       error: (error) => {
@@ -155,9 +154,10 @@ export class SalesComponent implements OnInit {
           },
         };
 
+        /*
         if (this.chart2) {
           this.chart2.destroy();
-        }
+        }*/
         this.chart2 = new Chart('MyChart2', this.config2);
       },
       error: (error) => {
