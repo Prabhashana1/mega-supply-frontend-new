@@ -53,8 +53,9 @@
     <div class="row mb-2" *ngIf="searchOption === 'customerName'">
         <div class="col">
             <div class="input-group">
-                <input type="text" placeholder="Enter Customer Name" name="searchCustomerName" [(ngModel)]="searchCustomerName"
-                    class="form-control rounded border-primary" (keyup)="searchByCustomerName(searchCustomerName)" />
+                <input type="text" placeholder="Enter Customer Name" name="searchCustomerName"
+                    [(ngModel)]="searchCustomerName" class="form-control rounded border-primary"
+                    (keyup)="searchByCustomerName(searchCustomerName)" />
                 <button (click)="searchByCustomerName(searchCustomerName)" class="btn btn-info mx-2">Search</button>
             </div>
         </div>
@@ -64,8 +65,8 @@
     <div class="row mb-2" *ngIf="searchOption === 'phoneNumber'">
         <div class="col">
             <div class="input-group">
-                <input type="text" placeholder="Enter Phone Number" name="searchPhoneNumber" [(ngModel)]="searchPhoneNumber"
-                    class="form-control rounded border-primary"
+                <input type="text" placeholder="Enter Phone Number" name="searchPhoneNumber"
+                    [(ngModel)]="searchPhoneNumber" class="form-control rounded border-primary"
                     (keyup.enter)="searchByPhoneNumber(searchPhoneNumber)" />
                 <button (click)="searchByPhoneNumber(searchPhoneNumber)" class="btn btn-info mx-2">Search</button>
             </div>
@@ -75,8 +76,9 @@
     <div class="row mb-2" *ngIf="searchOption === 'phoneModel'">
         <div class="col">
             <div class="input-group">
-                <input type="text" placeholder="Enter Phone Model" name="searchPhoneModel" [(ngModel)]="searchPhoneModel"
-                    class="form-control rounded border-primary" (keyup.enter)="searchByPhoneModel(searchPhoneModel)" />
+                <input type="text" placeholder="Enter Phone Model" name="searchPhoneModel"
+                    [(ngModel)]="searchPhoneModel" class="form-control rounded border-primary"
+                    (keyup.enter)="searchByPhoneModel(searchPhoneModel)" />
                 <button (click)="searchByPhoneModel(searchPhoneModel)" class="btn btn-info mx-2">Search</button>
             </div>
         </div>
@@ -95,8 +97,8 @@
     <div class="row mb-2" *ngIf="searchOption === 'date'">
         <div class="col">
             <div class="input-group">
-                <input type="date" name="searchReceivedDate" [(ngModel)]="searchReceivedDate" class="form-control rounded border-primary"
-                    (change)="filterByDate(searchReceivedDate)" />
+                <input type="date" name="searchReceivedDate" [(ngModel)]="searchReceivedDate"
+                    class="form-control rounded border-primary" (change)="filterByDate(searchReceivedDate)" />
                 <button (click)="filterByDate(searchImei)" class="btn btn-info mx-2">Search</button>
             </div>
         </div>
@@ -105,7 +107,8 @@
     <div class="row mb-2" *ngIf="searchOption === 'filter'">
         <div class="col">
             <div class="input-group">
-                <select class="form-select" name="filterOption" [(ngModel)]="filterOption" (change)="filterByStatus(filterOption)">
+                <select class="form-select" name="filterOption" [(ngModel)]="filterOption"
+                    (change)="filterByStatus(filterOption)">
                     <option value="PENDING">PENDING</option>
                     <option value="IN_PROGRESS">IN_PROGRESS</option>
                     <option value="COMPLETED">COMPLETED</option>
@@ -165,7 +168,8 @@
                             <td>{{job.status}}</td>
                             <td>
                                 <button type="button" class="btn btn-sm btn-info mx-1" (click)="openJobRepairModal(job)"
-                                    data-bs-toggle="modal" data-bs-target="#jobRepairModal" [disabled]="job.status === 'PAID'">Change Job
+                                    data-bs-toggle="modal" data-bs-target="#jobRepairModal"
+                                    [disabled]="job.status === 'PAID'">Change Job
                                     Progress</button>
                                 <button type="button" class="btn btn-sm btn-success" (click)="openJobPayModal(job)"
                                     data-bs-toggle="modal" data-bs-target="#jobPayModal">Pay</button>
@@ -204,8 +208,8 @@
                     </div>
                     <div class="mb-3">
                         <label for="price" class="form-label">Price</label>
-                        <input type="number" class="form-control" id="price" [disabled]="isPaid" [(ngModel)]="jobPayFormData.price"
-                            name="price" required>
+                        <input type="number" class="form-control" id="price" [disabled]="isPaid"
+                            [(ngModel)]="jobPayFormData.price" name="price" required>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -215,7 +219,8 @@
                         <button type="submit" class="btn btn-primary" (click)="jobPay(jobPayForm)"
                             data-bs-dismiss="modal" [disabled]="jobPayForm.invalid || isPaid">Pay</button>
                         <button type="submit" class="btn btn-success" data-bs-dismiss="modal"
-                            [disabled]="jobPayForm.invalid || isPaid" (click)="jobPayAndPrint(jobPayForm, jobPayFormData.id)">Pay
+                            [disabled]="jobPayForm.invalid || isPaid"
+                            (click)="jobPayAndPrint(jobPayForm, jobPayFormData.id)">Pay
                             & Print
                             Invoice</button>
                     </div>
@@ -463,7 +468,8 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-primary" [disabled]="jobeSaveForm.invalid"
-                            data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#confirmationViewLinkModal">Save
+                            data-bs-dismiss="modal" data-bs-toggle="modal"
+                            data-bs-target="#confirmationViewLinkModal">Save
                             Job</button>
                     </div>
                 </form>
@@ -475,24 +481,29 @@
 
 
 <!-- Confirmation Modal -->
-<div class="modal fade" id="confirmationViewLinkModal" tabindex="-1" aria-labelledby="confirmationViewLinkModalLabel" aria-hidden="true">
-    <div class="modal-dialog"> 
+<div class="modal fade" id="confirmationViewLinkModal" tabindex="-1" aria-labelledby="confirmationViewLinkModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="confirmationViewLinkModalLabel">Confirmation</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                <div *ngIf="isLoading" class="d-flex justify-content-center">
-                    <div class="spinner-border text-primary" role="status">
-                      <span class="visually-hidden">Loading...</span>
-                    </div>
-                  </div>
             </div>
             <div class="modal-body">
-                Do you want to generate a QR code for the new job?
+                <div *ngIf="isLoading" class="d-flex justify-content-center">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+                <div *ngIf="!isLoading">
+                    Do you want to generate a QR code for the new job?
+                </div>
             </div>
-            <div class="modal-footer">
+            <div class="modal-footer" *ngIf="!isLoading">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                <button type="button" class="btn btn-primary" [disabled]="isLoading" (click)="confirmGenerateViewLinkQR()" data-bs-toggle="modal" data-bs-target="#QRViewLinkModal">Yes</button>
+                <button type="button" class="btn btn-primary" [disabled]="isLoading"
+                    (click)="confirmGenerateViewLinkQR()" data-bs-toggle="modal"
+                    data-bs-target="#QRViewLinkModal">Yes</button>
             </div>
         </div>
     </div>
@@ -510,7 +521,7 @@
             <div class="modal-body">
                 <div class="text-center" *ngIf="qrCodeUrl">
                     <img [src]="qrCodeUrl" alt="QR Code">
-                  </div>                  
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -543,7 +554,8 @@
                     </div>
                     <div class="mb-3">
                         <label for="id" class="form-label">Job ID</label>
-                        <input type="number" disabled="true" class="form-control" name="id" [(ngModel)]="jobRepairForm.id">
+                        <input type="number" disabled="true" class="form-control" name="id"
+                            [(ngModel)]="jobRepairForm.id">
                     </div>
                     <div class="mb-3">
                         <label for="repairStatus" class="form-label">Job Status</label>
