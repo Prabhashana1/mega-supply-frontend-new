@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Chart, registerables } from 'chart.js';
 import { ApiService } from 'src/app/service/api.service';
 
@@ -11,225 +11,10 @@ Chart.register(...registerables);
 })
 export class SalesComponent implements OnInit {
 
-  public config: any;
-  public chart: any;
-  public config2: any;
-  public chart2: any;
-  showFailedResponse: boolean = false;
-  message: string = '';
-  yearTotalSales: number = 0;
-  year1: number = 0;
-  monthTotalSales: number = 0;
-  selectedYear1: number = 2024;
-  selectedYear2: number = 2024;
-  selectedMonth2: number = 1;
-  month: string = '';
-  year2: number = 0;
-
-  years: number[] = Array.from({ length: 12 }, (_, i) => 2024 + i);
-  months: { value: number, name: string }[] = [
-    { value: 1, name: 'JANUARY' },
-    { value: 2, name: 'FEBRUARY' },
-    { value: 3, name: 'MARCH' },
-    { value: 4, name: 'APRIL' },
-    { value: 5, name: 'MAY' },
-    { value: 6, name: 'JUNE' },
-    { value: 7, name: 'JULY' },
-    { value: 8, name: 'AUGUST' },
-    { value: 9, name: 'SEPTEMBER' },
-    { value: 10, name: 'OCTOBER' },
-    { value: 11, name: 'NOVEMBER' },
-    { value: 12, name: 'DECEMBER' },
-  ];
-
-  constructor(private apiService: ApiService) { }
-
-  ngOnInit(): void {
-    const currentDate = new Date();
-    this.selectedYear1 = currentDate.getFullYear();
-    this.selectedYear2 = currentDate.getFullYear();
-    this.selectedMonth2 = currentDate.getMonth() + 1;
-    this.loadYearlySales(this.selectedYear1);
-    this.loadMonthlySales(this.selectedYear2, this.selectedMonth2);
-  }
-
-  loadYearlySales(year: number): void {
-    this.apiService.getSalesByYear(year.toString()).subscribe({
-      next: (response) => {
-        const salesData = this.mapApiDataToChartData(response.data.monthlySales);
-        this.yearTotalSales = response.data.totalYearlySales;
-        this.year1 = response.data.year;
-        this.config = this.getYearlyChartConfig(this.year1, salesData);
-
-        if (this.chart) {
-          this.chart.destroy();
-        }
-        this.chart = new Chart('MyChart', this.config);
-      },
-      error: (error) => this.handleApiError(error)
-    });
-  }
-
-  loadMonthlySales(year: number, month: number): void {
-    this.apiService.getDailySalesByMonth(year, month).subscribe({
-      next: (response) => {
-        const dailySalesData = this.mapApiDataToChartData(response.data.dailySales);
-        this.monthTotalSales = response.data.totalMonthlySales;
-        this.year2 = response.data.year;
-        this.month = this.getMonthName(month);
-        this.config2 = this.getMonthlyChartConfig(this.year2, this.month, dailySalesData);
-
-        if (this.chart2) {
-          this.chart2.destroy();
-        }
-        this.chart2 = new Chart('MyChart2', this.config2);
-      },
-      error: (error) => this.handleApiError(error)
-    });
-  }
-
-  onYearChange(event: any): void {
-    this.selectedYear1 = +event.target.value;
-    this.loadYearlySales(this.selectedYear1);
-  }
-
-  onMonthChange(event: any): void {
-    this.selectedYear2 = this.selectedYear1;
-    this.selectedMonth2 = +event.target.value;
-    this.loadMonthlySales(this.selectedYear2, this.selectedMonth2);
-  }
-
-  showFailedAlert(responseMessage: string): void {
-    this.showFailedResponse = true;
-    this.message = responseMessage;
-    setTimeout(() => {
-      this.showFailedResponse = false;
-    }, 10000);
-  }
-
-  private mapApiDataToChartData(salesData: any): number[] {
-    return Array.isArray(salesData) ? salesData.map((data: any) => data.totalSales || 0) : [];
-  }
-
-  private getYearlyChartConfig(year: number, salesData: number[]): any {
-    return {
-      type: 'bar',
-      data: {
-        labels: ['JAN', 'FEB', 'MARCH', 'APR', 'MAY', 'JUNE', 'JULY', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
-        datasets: [
-          {
-            label: `Sales for ${year}`,
-            data: salesData,
-            backgroundColor: '#0090c2',
-          },
-        ],
-      },
-      options: {
-        aspectRatio: 1,
-        scales: {
-          x: {
-            title: {
-              display: true,
-              text: 'Months'
-            }
-          },
-          y: {
-            title: {
-              display: true,
-              text: 'Sales LKR'
-            },
-            beginAtZero: true
-          }
-        }
-      }
-    };
-  }
-
-  private getMonthlyChartConfig(year: number, month: string, salesData: number[]): any {
-    return {
-      type: 'bar',
-      data: {
-        labels: this.generateLabelsForMonth(year, this.selectedMonth2),
-        datasets: [
-          {
-            label: `Sales for ${month} ${year}`,
-            data: salesData,
-            backgroundColor: '#0090c2',
-          },
-        ],
-      },
-      options: {
-        aspectRatio: 1,
-        scales: {
-          x: {
-            title: {
-              display: true,
-              text: 'Days'
-            }
-          },
-          y: {
-            title: {
-              display: true,
-              text: 'Sales LKR'
-            },
-            beginAtZero: true
-          }
-        }
-      }
-    };
-  }
-
-  private getMonthName(month: number): string {
-    return this.months.find(m => m.value === month)?.name || '';
-  }
-
-  private generateLabelsForMonth(year: number, month: number): string[] {
-    const daysInMonth = new Date(year, month, 0).getDate();
-    return Array.from({ length: daysInMonth }, (_, i) => (i + 1).toString());
-  }
-
-  private handleApiError(error: any): void {
-    if (error.status === 0) {
-      this.showFailedAlert('Server is currently unavailable. Please try again later...');
-    } else {
-      this.showFailedAlert(error.error.message);
-    }
-  }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*import { Component, OnInit, ViewChild } from '@angular/core';
-import { Chart, registerables } from 'chart.js';
-import { ApiService } from 'src/app/service/api.service';
-
-Chart.register(...registerables);
-
-@Component({
-  selector: 'app-sales',
-  templateUrl: './sales.component.html',
-  styleUrls: ['./sales.component.scss']
-})
-export class SalesComponent implements OnInit {
-
-  public config: any;
-  public chart: any;
-  public config2: any;
-  public chart2: any;
+  public config: any; //year chart config
+  public chart: any; //year chart
+  public config2: any; //month chrt config
+  public chart2: any; //month chart
   showFailedResponse: boolean = false;
   message: string = '';
   yearTotalSalse: number = 0;
@@ -244,6 +29,7 @@ export class SalesComponent implements OnInit {
 
 
   years: number[] = [2024, 2025, 2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033, 2034, 2035];
+  years2: number[] = [2024, 2025, 2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033, 2034, 2035];
   months: { value: number, name: string }[] = [
     { value: 1, name: 'JANUARY' },
     { value: 2, name: 'FEBRUARY' },
@@ -390,6 +176,8 @@ export class SalesComponent implements OnInit {
     this.loadYearlySales(this.selectedYear1);
   }
 
+
+
   onMonthChange(event: any): void {
     this.selectedYear2 = event.target.value;
     this.selectedMonth2 = event.target.value;
@@ -418,7 +206,6 @@ export class SalesComponent implements OnInit {
     return Array.from({ length: daysInMonth }, (_, i) => (i + 1).toString());
   }
 }
-*/
 
 /*
 public config: any;

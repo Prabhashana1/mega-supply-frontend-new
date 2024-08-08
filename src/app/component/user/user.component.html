@@ -26,7 +26,7 @@
                     data-bs-target="#addJobFromModal">Add New Job</button>
                 <button type="button" class="btn btn-success mx-1 rounded btn-sm"
                     (click)="refreshPage()">Refresh</button>
-                <select class="form-select mx-2 rounded" [(ngModel)]="searchOption">
+                <select class="form-select mx-2 rounded" name="searchOption" [(ngModel)]="searchOption">
                     <option value="Select Search Option">Select Search Option</option>
                     <option value="id">Search by Job ID</option>
                     <option value="customerName">Search by Customer Name</option>
@@ -43,7 +43,7 @@
     <div class="row mb-2" *ngIf="searchOption === 'id'">
         <div class="col">
             <div class="input-group">
-                <input type="number" placeholder="Enter Job ID" [(ngModel)]="searchJobId"
+                <input type="number" placeholder="Enter Job ID" name="searchJobId" [(ngModel)]="searchJobId"
                     class="form-control rounded border-primary" (keyup.enter)="searchById(searchJobId)" />
                 <button (click)="searchById(searchJobId)" class="btn btn-info mx-2 rounded">Search</button>
             </div>
@@ -53,7 +53,7 @@
     <div class="row mb-2" *ngIf="searchOption === 'customerName'">
         <div class="col">
             <div class="input-group">
-                <input type="text" placeholder="Enter Customer Name" [(ngModel)]="searchCustomerName"
+                <input type="text" placeholder="Enter Customer Name" name="searchCustomerName" [(ngModel)]="searchCustomerName"
                     class="form-control rounded border-primary" (keyup)="searchByCustomerName(searchCustomerName)" />
                 <button (click)="searchByCustomerName(searchCustomerName)" class="btn btn-info mx-2">Search</button>
             </div>
@@ -64,7 +64,7 @@
     <div class="row mb-2" *ngIf="searchOption === 'phoneNumber'">
         <div class="col">
             <div class="input-group">
-                <input type="text" placeholder="Enter Phone Number" [(ngModel)]="searchPhoneNumber"
+                <input type="text" placeholder="Enter Phone Number" name="searchPhoneNumber" [(ngModel)]="searchPhoneNumber"
                     class="form-control rounded border-primary"
                     (keyup.enter)="searchByPhoneNumber(searchPhoneNumber)" />
                 <button (click)="searchByPhoneNumber(searchPhoneNumber)" class="btn btn-info mx-2">Search</button>
@@ -75,7 +75,7 @@
     <div class="row mb-2" *ngIf="searchOption === 'phoneModel'">
         <div class="col">
             <div class="input-group">
-                <input type="text" placeholder="Enter Phone Model" [(ngModel)]="searchPhoneModel"
+                <input type="text" placeholder="Enter Phone Model" name="searchPhoneModel" [(ngModel)]="searchPhoneModel"
                     class="form-control rounded border-primary" (keyup.enter)="searchByPhoneModel(searchPhoneModel)" />
                 <button (click)="searchByPhoneModel(searchPhoneModel)" class="btn btn-info mx-2">Search</button>
             </div>
@@ -85,7 +85,7 @@
     <div class="row mb-2" *ngIf="searchOption === 'IMEI'">
         <div class="col">
             <div class="input-group">
-                <input type="text" placeholder="Enter IMEI or Serial Number" [(ngModel)]="searchImei"
+                <input type="text" placeholder="Enter IMEI or Serial Number" name="searchImei" [(ngModel)]="searchImei"
                     class="form-control rounded border-primary" (keyup.enter)="searchByImei(searchImei)" />
                 <button (click)="searchByImei(searchImei)" class="btn btn-info mx-2">Search</button>
             </div>
@@ -95,7 +95,7 @@
     <div class="row mb-2" *ngIf="searchOption === 'date'">
         <div class="col">
             <div class="input-group">
-                <input type="date" [(ngModel)]="searchReceivedDate" class="form-control rounded border-primary"
+                <input type="date" name="searchReceivedDate" [(ngModel)]="searchReceivedDate" class="form-control rounded border-primary"
                     (change)="filterByDate(searchReceivedDate)" />
                 <button (click)="filterByDate(searchImei)" class="btn btn-info mx-2">Search</button>
             </div>
@@ -105,7 +105,7 @@
     <div class="row mb-2" *ngIf="searchOption === 'filter'">
         <div class="col">
             <div class="input-group">
-                <select class="form-select" [(ngModel)]="filterOption" (change)="filterByStatus(filterOption)">
+                <select class="form-select" name="filterOption" [(ngModel)]="filterOption" (change)="filterByStatus(filterOption)">
                     <option value="PENDING">PENDING</option>
                     <option value="IN_PROGRESS">IN_PROGRESS</option>
                     <option value="COMPLETED">COMPLETED</option>
@@ -197,7 +197,7 @@
             </div>
             <div class="modal-body">
                 <form #jobPayForm="ngForm">
-                    <input type="hidden" [(ngModel)]="jobPayFormData.id" name="id">
+                    <input type="hidden" name="id" [(ngModel)]="jobPayFormData.id" name="id">
                     <div class="mb-3">
                         <label for="jobId" class="form-label">Job ID</label>
                         <input type="text" disabled="true" class="form-control" value="{{jobPayFormData.id}}">
@@ -538,7 +538,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="id" class="form-label">Job ID</label>
-                        <input type="number" disabled="true" class="form-control" [(ngModel)]="jobRepairForm.id">
+                        <input type="number" disabled="true" class="form-control" name="id" [(ngModel)]="jobRepairForm.id">
                     </div>
                     <div class="mb-3">
                         <label for="repairStatus" class="form-label">Job Status</label>
