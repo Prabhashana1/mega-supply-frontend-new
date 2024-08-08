@@ -8,8 +8,8 @@ import { UserAuthService } from './user-auth.service';
 export class UserService {
 
 
- BASE_URL = 'http://178.128.116.193:8080/api/auth';
-  //BASE_URL = "https://megaback-production.up.railway.app/api/auth";
+ //BASE_URL = 'http://178.128.116.193:8080/api/auth';
+  BASE_URL = "https://megaback-production.up.railway.app/api/auth";
   //BASE_URL = "http://localhost:8080/api/auth";
 
   constructor(private httpClient:HttpClient , private userAuthService:UserAuthService) { }

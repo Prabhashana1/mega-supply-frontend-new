@@ -477,6 +477,12 @@
 <!-- Confirmation Modal -->
 <div class="modal fade" id="confirmationViewLinkModal" tabindex="-1" aria-labelledby="confirmationViewLinkModalLabel" aria-hidden="true">
     <div class="modal-dialog">
+        <div *ngIf="isLoading" class="d-flex justify-content-center">
+            <div class="spinner-border text-primary" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </div>
+          
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="confirmationViewLinkModalLabel">Confirmation</h5>
@@ -487,7 +493,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                <button type="button" class="btn btn-primary" (click)="confirmGenerateViewLinkQR()" data-bs-toggle="modal" data-bs-target="#QRViewLinkModal">Yes</button>
+                <button type="button" class="btn btn-primary" [disabled]="isLoading" (click)="confirmGenerateViewLinkQR()" data-bs-toggle="modal" data-bs-target="#QRViewLinkModal">Yes</button>
             </div>
         </div>
     </div>

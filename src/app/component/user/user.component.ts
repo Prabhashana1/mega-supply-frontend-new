@@ -49,6 +49,7 @@ export class UserComponent implements OnInit {
   newJobId: number = 0;
   viewLink: string = '';
   qrCodeUrl: string = '';
+  isLoading: boolean = false;
 
 
   saveFormData: JobSaveForm = {
@@ -286,16 +287,18 @@ export class UserComponent implements OnInit {
 
   addJob(jobSaveForm: NgForm) {
     if (jobSaveForm.valid) {
+      this.isLoading = true;
       this.apiService.addJob(jobSaveForm.value).subscribe((response: any) => {
         this.showSuccessAlert(response.message);
         this.getJobData();
         this.resetJobSaveForm(jobSaveForm);
         this.newJobId = response.data;
-
+        this.isLoading = false;
       },
         (error => {
           this.showFailedAlert(error);
           jobSaveForm.resetForm();
+          this.isLoading = false;
         })
       );
     }
